@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="aphelion"
+run/main_scene="uid://dssoc0s8tj16o"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -25,6 +26,10 @@ directories/dch_directory={
 }
 directories/dtl_directory={}
 layout/style_directory={}
+
+[display]
+
+window/stretch/mode="canvas_items"
 
 [editor_plugins]
 

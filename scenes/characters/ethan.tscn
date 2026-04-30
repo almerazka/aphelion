@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bobfjr072uvo0" path="res://assets/characters/Ethan/ethan2.png" id="1_hglu8"]
 [ext_resource type="Texture2D" uid="uid://cgt6d1m022x4x" path="res://assets/characters/Ethan/ethan3.png" id="2_gkbx8"]
+[ext_resource type="Script" uid="uid://cf7ywp2x10jlx" path="res://scripts/characters/character_movement.gd" id="3_jik3d"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_omk8j"]
 atlas = ExtResource("1_hglu8")
@@ -39,7 +40,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -76,16 +77,23 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a6g5r"]
-size = Vector2(21, 41)
+size = Vector2(43, 22)
 
 [node name="Ethan" type="CharacterBody2D" unique_id=2123863911]
+script = ExtResource("3_jik3d")
+can_walk = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=109227473]
-scale = Vector2(0.15, 0.15)
+scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_omk8j")
-animation = &"walk_down"
-frame_progress = 0.41652516
+animation = &"walk_up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=500358420]
-position = Vector2(-0.5, 1.5)
+position = Vector2(0.5, 34)
 shape = SubResource("RectangleShape2D_a6g5r")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1782459012]
+position = Vector2(0, -24)
+zoom = Vector2(1.5, 1.5)
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0

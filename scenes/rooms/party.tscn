@@ -159,6 +159,9 @@
 [ext_resource type="Texture2D" uid="uid://c6aligkhjchd3" path="res://assets/area/Kitchen/Kitchen_Shadow_Singles_48x48_409.png" id="157_g4jd7"]
 [ext_resource type="Texture2D" uid="uid://dtsyc7o21iu62" path="res://assets/area/Kitchen/Kitchen_Shadow_Singles_48x48_19.png" id="158_t6rnw"]
 [ext_resource type="Texture2D" uid="uid://c0crfvv74u0qb" path="res://assets/area/Kitchen/Kitchen_Shadow_Singles_48x48_20.png" id="159_8n1fm"]
+[ext_resource type="PackedScene" uid="uid://c3sy7ebd6dhxp" path="res://scenes/characters/ethan.tscn" id="981_ethan"]
+[ext_resource type="Script" uid="uid://goei7n31gjtu" path="res://scripts/world/door_trigger.gd" id="990_door_party"]
+[ext_resource type="Script" uid="uid://bfjvcdpmvu25q" path="res://scripts/world/scene_spawn.gd" id="991_spawn_party"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6y4ii"]
 texture = ExtResource("1_wspdt")
@@ -6389,7 +6392,11 @@ sources/144 = SubResource("TileSetAtlasSource_3dmqk")
 sources/145 = SubResource("TileSetAtlasSource_e0vg5")
 sources/146 = SubResource("TileSetAtlasSource_amvf6")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exit_lobby_party"]
+size = Vector2(196, 52)
+
 [node name="party" type="Node2D" unique_id=1654834358]
+script = ExtResource("991_spawn_party")
 
 [node name="Floor" type="TileMapLayer" parent="." unique_id=581758308]
 texture_filter = 3
@@ -6415,3 +6422,19 @@ tile_set = SubResource("TileSet_5q85o")
 [node name="Carpet" type="TileMapLayer" parent="." unique_id=270875099]
 tile_map_data = PackedByteArray("AAALABMAkAAAAAAAAAALABQAkAAAAAEAAAALABUAkAAAAAEAAAAMABMAkAABAAAAAAAMABQAkAABAAEAAAAMABUAkAABAAEAAAANABMAkAACAAAAAAANABQAkAACAAEAAAANABUAkAACAAEAAAAMABYAkAABAAIAAAANABYAkgAAAAIAAAALABYAkAAAAAIAAAAOABMAkAABAAAAAAAOABQAkAABAAEAAAAPABMAkAACAAAAAAAPABQAkAACAAEAAAAQABMAkAABAAAAAAAQABQAkAABAAEAAAARABMAkAACAAAAAAARABQAkAACAAEAAAASABMAkAABAAAAAAASABQAkAABAAEAAAATABMAkAACAAAAAAATABQAkAACAAEAAAAUABMAkAABAAAAAAAUABQAkAABAAEAAAAVABMAkAACAAAAAAAVABQAkAACAAEAAAAWABMAkAABAAAAAAAWABQAkAABAAEAAAAXABMAkAACAAAAAAAXABQAkAACAAEAAAAZABMAkgACAAAAAAAZABQAkgACAAEAAAAZABUAkgACAAEAAAAZABYAkgACAAIAAAAXABYAkgAAAAIAAAAYABYAkgABAAIAAAAVABYAkgAAAAIAAAAWABYAkgABAAIAAAATABYAkgAAAAIAAAAUABYAkgABAAIAAAARABYAkgAAAAIAAAASABYAkgABAAIAAAAPABYAkgAAAAIAAAAQABYAkgABAAIAAAAOABYAkgABAAIAAAAOABUAkgAAAAEAAAAPABUAkgAAAAEAAAAQABUAkgAAAAEAAAARABUAkgAAAAEAAAASABUAkgAAAAEAAAATABUAkgAAAAEAAAAUABUAkgAAAAEAAAAVABUAkgAAAAEAAAAWABUAkgAAAAEAAAAXABUAkgAAAAEAAAAYABUAkgAAAAEAAAAYABQAkgAAAAEAAAAYABMAkgABAAAAAAA=")
 tile_set = SubResource("TileSet_1bcom")
+
+[node name="Ethan" parent="." unique_id=2123863911 instance=ExtResource("981_ethan")]
+position = Vector2(286, 398)
+
+[node name="SpawnFromLobby" type="Marker2D" parent="." unique_id=980201]
+position = Vector2(286, 398)
+
+[node name="ExitToLobby" type="Area2D" parent="." unique_id=980202]
+position = Vector2(287, 484)
+script = ExtResource("990_door_party")
+target_scene = "res://scenes/main_menu/lobby_1.tscn"
+target_spawn_marker = &"SpawnFromParty"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitToLobby" unique_id=980203]
+position = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_exit_lobby_party")
