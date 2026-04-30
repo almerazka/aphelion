@@ -7504,6 +7504,12 @@ size = Vector2(64, 56)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_living_door"]
 size = Vector2(64, 56)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_garden_door"]
+size = Vector2(113, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_stairs_lobby2"]
+size = Vector2(139, 20)
+
 [node name="lobby1" type="Node2D" unique_id=1174222973]
 script = ExtResource("221_u7b2a")
 
@@ -7583,6 +7589,26 @@ target_spawn_marker = &"SpawnFromLobby"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DoorLiving" unique_id=141101008]
 shape = SubResource("RectangleShape2D_living_door")
 
+[node name="DoorGarden" type="Area2D" parent="." unique_id=141101015]
+position = Vector2(1870, 290)
+script = ExtResource("220_tp9h1")
+target_scene = "res://scenes/rooms/garden.tscn"
+target_spawn_marker = &"SpawnFromLobby"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorGarden" unique_id=141101016]
+position = Vector2(2.5, 3)
+shape = SubResource("RectangleShape2D_garden_door")
+
+[node name="DoorStairsLobby2" type="Area2D" parent="." unique_id=141101018]
+position = Vector2(1893, 9)
+script = ExtResource("220_tp9h1")
+target_scene = "res://scenes/main_menu/lobby_2.tscn"
+target_spawn_marker = &"SpawnFromLobby1Stairs"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorStairsLobby2" unique_id=141101019]
+position = Vector2(2, -1)
+shape = SubResource("RectangleShape2D_stairs_lobby2")
+
 [node name="SpawnFromKitchen" type="Marker2D" parent="." unique_id=141101011]
 position = Vector2(1415, 140)
 
@@ -7594,3 +7620,9 @@ position = Vector2(473, 140)
 
 [node name="SpawnFromLiving" type="Marker2D" parent="." unique_id=141101014]
 position = Vector2(794, 140)
+
+[node name="SpawnFromGarden" type="Marker2D" parent="." unique_id=141101017]
+position = Vector2(1873, 226)
+
+[node name="SpawnFromLobby2Stairs" type="Marker2D" parent="." unique_id=141101020]
+position = Vector2(1892, 152)
