@@ -3,6 +3,8 @@ extends CharacterBody2D
 @export var speed: float = 150.0
 @export var can_walk: bool = false
 @export var talk_action: StringName = &"talk"
+@export var execution_action: StringName = &"execution"
+@export_file("*.tscn") var execution_scene_path: String = "res://scenes/rooms/execution_living.tscn"
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var interaction_area: Area2D = get_node_or_null("InteractionArea")
@@ -45,6 +47,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event.is_action_pressed(talk_action):
 		_try_talk_to_nearest_npc()
+		return
+	if event.is_action_pressed(execution_action):
+		_try_enter_execution_scene()
 
 
 func _try_talk_to_nearest_npc() -> void:
@@ -91,6 +96,20 @@ func _try_talk_to_nearest_npc() -> void:
 	Dialogic.start(timeline)
 	_apply_dialog_name_style()
 	_apply_dialog_panel_style()
+
+
+func _try_enter_execution_scene() -> void:
+	if _dialog_active:
+		return
+	if execution_scene_path.is_empty():
+		return
+	if not has_node("/root/ClueInventory"):
+		return
+	if not ClueInventory.is_all_core_clues_unlocked():
+		return
+	if get_tree().current_scene != null and get_tree().current_scene.scene_file_path == execution_scene_path:
+		return
+	get_tree().change_scene_to_file(execution_scene_path)
 
 
 func _on_dialogue_ended() -> void:

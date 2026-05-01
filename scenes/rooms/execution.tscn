@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bujhjfw27i2tn"]
+
+[ext_resource type="PackedScene" uid="uid://dq1v6lxjgsry2" path="res://scenes/rooms/living.tscn" id="1_alfc2"]
+[ext_resource type="Script" uid="uid://cdpsb3irbw373" path="res://scripts/world/execution_living_setup.gd" id="2_ocens"]
+[ext_resource type="PackedScene" uid="uid://cx1fsybn51ygk" path="res://scenes/characters/dominic.tscn" id="3_q1ccr"]
+[ext_resource type="PackedScene" uid="uid://cl1uwio7bw5ft" path="res://scenes/characters/victoria.tscn" id="4_ru6bl"]
+[ext_resource type="PackedScene" uid="uid://4vmh2iqsvepp" path="res://scenes/characters/julian.tscn" id="5_wln1w"]
+[ext_resource type="PackedScene" uid="uid://be6d30mx8c5ud" path="res://scenes/characters/luna.tscn" id="6_6kq1p"]
+[ext_resource type="PackedScene" uid="uid://dy24ed1x5c5a5" path="res://scenes/characters/marcus.tscn" id="7_x3y1g"]
+
+[node name="living" unique_id=602755512 instance=ExtResource("1_alfc2")]
+script = ExtResource("2_ocens")
+ethan_node_path = NodePath("Ethan")
+center_marker_path = NodePath("ExecutionCenter")
+disable_exit_area = true
+exit_area_path = NodePath("ExitToLobby")
+dominic_scene = ExtResource("3_q1ccr")
+victoria_scene = ExtResource("4_ru6bl")
+julian_scene = ExtResource("5_wln1w")
+luna_scene = ExtResource("6_6kq1p")
+marcus_scene = ExtResource("7_x3y1g")
+
+[node name="ExecutionCenter" type="Marker2D" parent="." index="10" unique_id=1473404096]
+position = Vector2(790, 430)

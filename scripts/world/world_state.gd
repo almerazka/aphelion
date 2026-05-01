@@ -17,9 +17,6 @@ func _ready() -> void:
 	_canvas_modulate.name = "WorldTint"
 	_canvas_modulate.color = REAL_WORLD_COLOR
 	get_tree().root.call_deferred("add_child", _canvas_modulate)
-	# Allow quick testing in editor/debug builds without waiting story unlock.
-	if OS.is_debug_build():
-		shadow_unlocked = true
 
 
 func _unhandled_input(event: InputEvent) -> void:

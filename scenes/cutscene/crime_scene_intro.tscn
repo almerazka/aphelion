@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://dj2u2udcup4qu"]
+
+[ext_resource type="PackedScene" uid="uid://bnanijylhhclm" path="res://scenes/cutscene/crime_scene_base.tscn" id="1_crime_scene_base"]
+[ext_resource type="Script" uid="uid://bcnaygs8qkb46" path="res://scripts/cutscene/crime_scene_intro.gd" id="2_crime_intro_script"]
+
+[node name="crime_scene" unique_id=1083640293 instance=ExtResource("1_crime_scene_base")]
+script = ExtResource("2_crime_intro_script")
+gameplay_scene_path = "res://scenes/main_menu/lobby_1.tscn"
+cutscene_zoom = Vector2(1.9, 1.9)
+cutscene_camera_offset = Vector2(-110, 0)
+
+[node name="IntroOverlay" type="CanvasLayer" parent="." index="15" unique_id=203175789]
+layer = 101
+
+[node name="FadeRect" type="ColorRect" parent="IntroOverlay" index="0" unique_id=1050246538]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CutsceneCamera" type="Camera2D" parent="." index="16" unique_id=1037117807]
+zoom = Vector2(1.45, 1.45)
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0

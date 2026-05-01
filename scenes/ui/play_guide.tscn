@@ -1,0 +1,60 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/play_guide.gd" id="1_play_guide_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_play_guide_panel"]
+bg_color = Color(0.02, 0.06, 0.09, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.45, 0.92, 1, 0.95)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0.12, 0.88, 1, 0.28)
+shadow_size = 14
+
+[node name="PlayGuideUI" type="CanvasLayer"]
+layer = 12
+script = ExtResource("1_play_guide_script")
+
+[node name="ScreenTint" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="CenterGuidePanel" type="PanelContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -360.0
+offset_top = -120.0
+offset_right = 360.0
+offset_bottom = 120.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_play_guide_panel")
+
+[node name="Margin" type="MarginContainer" parent="CenterGuidePanel"]
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="GuideText" type="RichTextLabel" parent="CenterGuidePanel/Margin"]
+bbcode_enabled = true
+scroll_active = false
+theme_override_colors/default_color = Color(0.9, 0.97, 1, 1)
+theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/bold_font_size = 30
+theme_override_constants/line_separation = 6
+
+[node name="DisplayTimer" type="Timer" parent="."]
+one_shot = true
+autostart = false

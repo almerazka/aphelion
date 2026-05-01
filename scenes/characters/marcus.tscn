@@ -25,7 +25,8 @@ collision_layer = 2
 collision_mask = 3
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1890252997]
-scale = Vector2(0.09, 0.09)
+position = Vector2(-1, 0)
+scale = Vector2(0.08, 0.08)
 sprite_frames = SubResource("SpriteFrames_u87iq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=839807271]

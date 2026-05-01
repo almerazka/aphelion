@@ -1,5 +1,8 @@
 extends Node
 
+signal clues_updated
+signal execution_state_changed(completed: bool)
+
 const CLUES_BY_NPC := {
 	"dominic": {
 		"name": "DOMINIC HALE",
@@ -44,6 +47,8 @@ const CLUES_BY_NPC := {
 }
 
 var _unlocked_npc_keys: Dictionary = {}
+var _unlock_order: Array[String] = []
+var _execution_completed: bool = false
 
 
 func unlock_npc_clues(npc_key: String) -> bool:
@@ -53,6 +58,8 @@ func unlock_npc_clues(npc_key: String) -> bool:
 	if _unlocked_npc_keys.has(key):
 		return false
 	_unlocked_npc_keys[key] = true
+	_unlock_order.append(key)
+	clues_updated.emit()
 	return true
 
 
@@ -60,9 +67,32 @@ func has_npc_clues(npc_key: String) -> bool:
 	return _unlocked_npc_keys.has(npc_key.to_lower())
 
 
+func get_unlocked_npc_count() -> int:
+	return _unlocked_npc_keys.size()
+
+
+func get_required_npc_count() -> int:
+	return CLUES_BY_NPC.size()
+
+
+func is_all_core_clues_unlocked() -> bool:
+	return get_unlocked_npc_count() >= get_required_npc_count()
+
+
+func mark_execution_completed() -> void:
+	if _execution_completed:
+		return
+	_execution_completed = true
+	execution_state_changed.emit(true)
+
+
+func has_completed_execution() -> bool:
+	return _execution_completed
+
+
 func get_unlocked_sections() -> Array[Dictionary]:
 	var sections: Array[Dictionary] = []
-	for key in CLUES_BY_NPC.keys():
+	for key in _unlock_order:
 		if not _unlocked_npc_keys.has(key):
 			continue
 		var section_data: Dictionary = CLUES_BY_NPC[key]

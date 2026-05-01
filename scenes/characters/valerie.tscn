@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bf6moavmgiicj"]
+
+[ext_resource type="Texture2D" uid="uid://cwfkw6ute5qh4" path="res://assets/characters/Valerie/corps3.png" id="1_bj74q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_34m4v"]
+atlas = ExtResource("1_bj74q")
+region = Rect2(1032, 512, 344, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3v77u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_34m4v")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_34m4v"]
+size = Vector2(286.66666, 100)
+
+[node name="Valerie" type="CharacterBody2D" unique_id=91842193]
+scale = Vector2(0.4, 0.4)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1770356322]
+sprite_frames = SubResource("SpriteFrames_3v77u")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2042699037]
+position = Vector2(6.6666727, 36.666668)
+shape = SubResource("RectangleShape2D_34m4v")

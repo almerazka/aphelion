@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://61mtlb5vhvux"]
+
+[ext_resource type="PackedScene" uid="uid://bfdavr1lyq4tc" path="res://scenes/rooms/crime_scene.tscn" id="1_crime_scene_base"]
+[ext_resource type="Script" uid="uid://bcnaygs8qkb46" path="res://scripts/cutscene/crime_scene_intro.gd" id="2_crime_intro_script"]
+
+[node name="crime_scene" unique_id=943667003 instance=ExtResource("1_crime_scene_base")]
+script = ExtResource("2_crime_intro_script")
+gameplay_scene_path = "res://scenes/main_menu/lobby_1.tscn"
+
+[node name="IntroOverlay" type="CanvasLayer" parent="." index="15" unique_id=1543338345]
+layer = 101
+
+[node name="MessageBox" type="PanelContainer" parent="IntroOverlay" index="0" unique_id=671510625]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.83
+anchor_right = 0.5
+anchor_bottom = 0.83
+offset_left = -430.0
+offset_top = -90.0
+offset_right = 430.0
+offset_bottom = 20.0
+
+[node name="Message" type="RichTextLabel" parent="IntroOverlay/MessageBox" index="0" unique_id=1278885161]
+layout_mode = 2
+theme_override_colors/default_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_font_sizes/normal_font_size = 28
+theme_override_font_sizes/bold_font_size = 32
+bbcode_enabled = true
+scroll_active = false
+
+[node name="FadeRect" type="ColorRect" parent="IntroOverlay" index="1" unique_id=1919861409]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
