@@ -22,6 +22,7 @@ size = Vector2(38, 86)
 
 [node name="Dominic" type="CharacterBody2D" unique_id=1204560078]
 collision_layer = 2
+collision_mask = 3
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=496499535]
 visibility_layer = 2

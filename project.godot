@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="aphelion"
-run/main_scene="uid://dssoc0s8tj16o"
+run/main_scene="uid://b0jestbbfqnto"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 

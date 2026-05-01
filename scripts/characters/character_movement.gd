@@ -2,9 +2,21 @@ extends CharacterBody2D
 
 @export var speed: float = 150.0
 @export var can_walk: bool = false
+@export var talk_action: StringName = &"talk"
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var interaction_area: Area2D = get_node_or_null("InteractionArea")
 var _last_dir: Vector2 = Vector2.DOWN
+var _dialog_active: bool = false
+const DIALOG_NAME_COLOR := Color(1, 1, 1, 1)
+
+const INTERACTABLE_DIALOG_KEYS: Dictionary = {
+	"dominic": "dominic",
+	"victoria": "victoria",
+	"julian": "julian",
+	"luna": "luna",
+	"marcus": "marcus",
+}
 
 func _physics_process(_delta: float) -> void:
 	if not can_walk:
@@ -23,6 +35,78 @@ func _physics_process(_delta: float) -> void:
 		_play_idle()
 
 	move_and_slide()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if _dialog_active:
+		return
+	if event.is_action_pressed(talk_action):
+		_try_talk_to_nearest_npc()
+
+
+func _try_talk_to_nearest_npc() -> void:
+	if interaction_area == null:
+		return
+	if not has_node("/root/Dialogic"):
+		return
+
+	var nearest_npc: Node2D = null
+	var nearest_distance := INF
+
+	for body in interaction_area.get_overlapping_bodies():
+		if not (body is Node2D):
+			continue
+		var npc_key := String(body.name).to_lower()
+		if not INTERACTABLE_DIALOG_KEYS.has(npc_key):
+			continue
+
+		var distance := global_position.distance_to((body as Node2D).global_position)
+		if distance < nearest_distance:
+			nearest_distance = distance
+			nearest_npc = body
+
+	if nearest_npc == null:
+		return
+
+	var key: String = String(INTERACTABLE_DIALOG_KEYS[String(nearest_npc.name).to_lower()])
+	var timeline_text: String = NpcDialogues.get_timeline_text(key)
+	if timeline_text.is_empty():
+		return
+
+	var timeline := DialogicTimeline.new()
+	timeline.from_text(timeline_text)
+
+	_dialog_active = true
+	can_walk = false
+
+	if not Dialogic.timeline_ended.is_connected(_on_dialogue_ended):
+		Dialogic.timeline_ended.connect(_on_dialogue_ended)
+	if not Dialogic.Text.speaker_updated.is_connected(_on_dialogic_speaker_updated):
+		Dialogic.Text.speaker_updated.connect(_on_dialogic_speaker_updated)
+
+	Dialogic.start(timeline)
+	_apply_dialog_name_style()
+
+
+func _on_dialogue_ended() -> void:
+	if Dialogic.timeline_ended.is_connected(_on_dialogue_ended):
+		Dialogic.timeline_ended.disconnect(_on_dialogue_ended)
+	if Dialogic.Text.speaker_updated.is_connected(_on_dialogic_speaker_updated):
+		Dialogic.Text.speaker_updated.disconnect(_on_dialogic_speaker_updated)
+	_dialog_active = false
+	can_walk = true
+
+
+func _on_dialogic_speaker_updated(_character: DialogicCharacter) -> void:
+	_apply_dialog_name_style()
+
+
+func _apply_dialog_name_style() -> void:
+	for name_label in get_tree().get_nodes_in_group("dialogic_name_label"):
+		if "use_character_color" in name_label:
+			name_label.use_character_color = false
+		if name_label is CanvasItem:
+			(name_label as CanvasItem).self_modulate = DIALOG_NAME_COLOR
 
 func _play_walk(dir: Vector2) -> void:
 	if absf(dir.x) > absf(dir.y):

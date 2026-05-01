@@ -79,6 +79,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a6g5r"]
 size = Vector2(43, 22)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_interaction"]
+radius = 72.0
+
 [node name="Ethan" type="CharacterBody2D" unique_id=2123863911]
 collision_mask = 3
 script = ExtResource("3_jik3d")
@@ -92,6 +95,15 @@ animation = &"walk_up"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=500358420]
 position = Vector2(0.5, 34)
 shape = SubResource("RectangleShape2D_a6g5r")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_mask = 2
+monitoring = true
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(0, 8)
+shape = SubResource("CircleShape2D_interaction")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1782459012]
 position = Vector2(0, -24)
