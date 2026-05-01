@@ -16,4 +16,12 @@ func _ready() -> void:
 		return
 
 	if marker is Node2D and ethan is Node2D:
-		(ethan as Node2D).global_position = (marker as Node2D).global_position
+		_snap_ethan_to_marker(ethan as Node2D, marker as Node2D)
+
+
+func _snap_ethan_to_marker(ethan: Node2D, marker: Node2D) -> void:
+	ethan.global_position = marker.global_position
+	var camera := ethan.get_node_or_null("Camera2D")
+	if camera is Camera2D:
+		var cam := camera as Camera2D
+		cam.reset_smoothing()

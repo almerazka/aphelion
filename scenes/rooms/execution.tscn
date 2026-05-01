@@ -25,6 +25,20 @@ corner_radius_bottom_left = 8
 shadow_color = Color(0, 0, 0, 0.25)
 shadow_size = 4
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_resultpanel"]
+bg_color = Color(0.95, 0.97, 1, 0.97)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.35, 0.55, 0.82, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0.08, 0.2, 0.35, 0.22)
+shadow_size = 6
+
 [node name="living" unique_id=602755512 instance=ExtResource("1_alfc2")]
 script = ExtResource("2_ocens")
 ethan_node_path = NodePath("Ethan")
@@ -32,7 +46,7 @@ center_marker_path = NodePath("ExecutionCenter")
 disable_exit_area = true
 exit_area_path = NodePath("ExitToLobby")
 execution_action = &"execution"
-correct_culprit_key = "julian"
+correct_culprit_key = "dominic"
 execution_input_unlock_delay_seconds = 5.0
 retry_scene_path = "res://scenes/main_menu/lobby_1.tscn"
 retry_spawn_marker = &"SpawnFromLiving"
@@ -151,10 +165,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -260.0
-offset_top = -90.0
-offset_right = 260.0
-offset_bottom = 90.0
+offset_left = -220.0
+offset_top = -56.0
+offset_right = 220.0
+offset_bottom = 56.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_confirmpanel")
 
 [node name="Margin" type="MarginContainer" parent="ExecutionUI/ConfirmPanel" index="0" unique_id=2069399153]
@@ -200,6 +214,7 @@ offset_left = -260.0
 offset_top = -95.0
 offset_right = 260.0
 offset_bottom = 95.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_resultpanel")
 
 [node name="Margin" type="MarginContainer" parent="ExecutionUI/ResultPanel" index="0" unique_id=1843127802]
 layout_mode = 2
@@ -214,6 +229,7 @@ theme_override_constants/separation = 10
 
 [node name="ResultLabel" type="Label" parent="ExecutionUI/ResultPanel/Margin/VBox" index="0" unique_id=1128638073]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.12, 0.16, 0.24, 1)
 theme_override_font_sizes/font_size = 22
 text = "Result"
 horizontal_alignment = 1

@@ -99,6 +99,19 @@ func unlock_shadow_dominic_clue() -> bool:
 	return true
 
 
+func has_shadow_dominic_clue() -> bool:
+	return _shadow_dominic_clue_unlocked
+
+
+func reset_progress() -> void:
+	_unlocked_npc_keys.clear()
+	_unlock_order.clear()
+	_execution_completed = false
+	_shadow_dominic_clue_unlocked = false
+	clues_updated.emit()
+	execution_state_changed.emit(false)
+
+
 func get_unlocked_sections() -> Array[Dictionary]:
 	var sections: Array[Dictionary] = []
 	for key in _unlock_order:

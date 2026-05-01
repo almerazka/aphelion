@@ -131,6 +131,8 @@ func _try_auto_enter_execution_scene() -> void:
 		return
 	if not ClueInventory.is_all_core_clues_unlocked():
 		return
+	if has_node("/root/WorldState") and WorldState.shadow_unlocked and not ClueInventory.has_shadow_dominic_clue():
+		return
 	if get_tree().current_scene != null and get_tree().current_scene.scene_file_path == execution_scene_path:
 		return
 	_execution_transition_queued = true

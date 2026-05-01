@@ -5,10 +5,11 @@ extends Node2D
 @export var disable_exit_area: bool = true
 @export var exit_area_path: NodePath = ^"ExitToLobby"
 @export var execution_action: StringName = &"execution"
-@export var correct_culprit_key: String = "julian"
+@export var correct_culprit_key: String = "dominic"
 @export var execution_input_unlock_delay_seconds: float = 5.0
 @export_file("*.tscn") var retry_scene_path: String = "res://scenes/main_menu/lobby_1.tscn"
 @export var retry_spawn_marker: StringName = &"SpawnFromLiving"
+@export_file("*.tscn") var restart_scene_path: String = "res://scenes/cutscene/intro_start.tscn"
 
 const NPC_RING_ORDER: Array[String] = ["Dominic", "Victoria", "Julian", "Luna", "Marcus"]
 const SUSPECTS: Array[Dictionary] = [
@@ -46,6 +47,7 @@ const SUSPECT_SCENES := {
 var _pending_suspect_key: String = ""
 var _case_resolved: bool = false
 var _execution_input_unlocked: bool = false
+var _bad_ending_pending_restart: bool = false
 
 func _ready() -> void:
 	_disable_exit_if_needed()
@@ -174,6 +176,7 @@ func _setup_ui() -> void:
 
 	finish_button.visible = false
 	try_again_button.visible = true
+	try_again_button.text = "Try Again"
 	_set_ethan_can_walk(true)
 	_refresh_suspect_preview(0)
 
@@ -197,6 +200,7 @@ func _on_accuse_pressed() -> void:
 	_pending_suspect_key = String(SUSPECTS[selected_index].get("key", ""))
 	var selected_name := String(SUSPECTS[selected_index].get("label", "this person"))
 	confirm_label.text = "Are you sure %s is the killer?" % selected_name
+	choose_panel.visible = false
 	confirm_panel.visible = true
 	_refresh_ui_visibility()
 
@@ -219,7 +223,15 @@ func _on_confirm_yes_pressed() -> void:
 		finish_button.visible = true
 		_set_ethan_can_walk(false)
 	else:
-		result_label.text = "You are wrong.\nTry again."
+		var is_final_judgment := has_node("/root/WorldState") and has_node("/root/ClueInventory") and WorldState.shadow_unlocked and ClueInventory.has_shadow_dominic_clue()
+		if is_final_judgment:
+			_bad_ending_pending_restart = true
+			result_label.text = "You are wrong.\nBad ending."
+			try_again_button.text = "Restart"
+		else:
+			_bad_ending_pending_restart = false
+			result_label.text = "You are wrong.\nTry again."
+			try_again_button.text = "Try Again"
 		try_again_button.visible = true
 		finish_button.visible = false
 		if has_node("/root/WorldState"):
@@ -238,7 +250,19 @@ func _on_try_again_pressed() -> void:
 	result_panel.visible = false
 	_refresh_ui_visibility()
 	_pending_suspect_key = ""
+	var restart_from_beginning := _bad_ending_pending_restart
+	_bad_ending_pending_restart = false
 	_set_ethan_can_walk(false)
+	if restart_from_beginning:
+		if has_node("/root/ClueInventory"):
+			ClueInventory.reset_progress()
+		if has_node("/root/WorldState"):
+			WorldState.reset_state()
+		if has_node("/root/SceneTransition"):
+			SceneTransition.change_scene(restart_scene_path)
+		else:
+			get_tree().change_scene_to_file(restart_scene_path)
+		return
 	if has_node("/root/WorldState"):
 		WorldState.unlock_shadow_world(false)
 	if has_node("/root/SceneTransition"):

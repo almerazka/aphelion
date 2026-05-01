@@ -58,3 +58,9 @@ func _set_world_mode(shadow_mode: bool) -> void:
 	is_shadow_world = shadow_mode
 	_canvas_modulate.color = SHADOW_WORLD_COLOR if is_shadow_world else REAL_WORLD_COLOR
 	emit_signal("world_mode_changed", is_shadow_world)
+
+
+func reset_state() -> void:
+	shadow_unlocked = false
+	emit_signal("shadow_unlocked_changed", shadow_unlocked)
+	_set_world_mode(false)
