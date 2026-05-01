@@ -9,7 +9,7 @@ extends Node2D
 @onready var fade_rect: ColorRect = $IntroOverlay/FadeRect
 @onready var cutscene_camera: Camera2D = $CutsceneCamera
 
-const INTRO_TIMELINE_TEXT := """
+const INTRO_TIMELINE_PARTY_TEXT := """
 The tension at the party room was so much alive.
 
 Victoria: Congratulations again, Dominic for your new business and hosting this party.
@@ -17,7 +17,9 @@ Dominic: Thank you so much, I'd really appreciate that.
 
 Everyone was dancing, drinking, talking until there's something interrupting...
 A hysterical scream.
+"""
 
+const INTRO_TIMELINE_AFTER_SCREAM_TEXT := """
 Unknown: AAA.. OH MY GODDDDD! HELP!
 Victoria: Who is that?
 
@@ -30,8 +32,20 @@ func _ready() -> void:
 
 
 func _run_intro() -> void:
+	if has_node("/root/AudioManager"):
+		AudioManager.lock_scene_bgm()
+		AudioManager.play_party_bgm()
 	await _fade_from_black(1.2)
-	await _play_dialogic_timeline(INTRO_TIMELINE_TEXT)
+	await _play_dialogic_timeline(INTRO_TIMELINE_PARTY_TEXT)
+	if has_node("/root/AudioManager"):
+		AudioManager.stop_bgm()
+		AudioManager.play_scream()
+	await get_tree().create_timer(0.35).timeout
+	if has_node("/root/AudioManager"):
+		AudioManager.play_talking_bgm()
+	await _play_dialogic_timeline(INTRO_TIMELINE_AFTER_SCREAM_TEXT)
+	if has_node("/root/AudioManager"):
+		AudioManager.unlock_scene_bgm()
 	await _transition_to_scene(crime_intro_scene_path, transition_fade_out_duration)
 
 

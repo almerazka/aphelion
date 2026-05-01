@@ -2,7 +2,7 @@ extends CanvasLayer
 
 @export var intro_duration_seconds: float = 8.0
 @export var lobby_intro_duration_seconds: float = 8.0
-@export var execution_prompt_duration_seconds: float = 10.0
+@export var execution_prompt_duration_seconds: float = 5.0
 @export var shadow_prompt_duration_seconds: float = 10.0
 
 @onready var panel: PanelContainer = $CenterGuidePanel
@@ -242,3 +242,17 @@ func _format_seconds(total_seconds: float) -> String:
 	var minutes := (value % 3600) / 60
 	var seconds := value % 60
 	return "%02d:%02d:%02d" % [hours, minutes, seconds]
+
+
+func reset_session() -> void:
+	_showing_execution_prompt = false
+	_shadow_hint_shown_once = false
+	_lobby_intro_shown_once = false
+	_intro_guide_shown_once = false
+	_execution_room_hint_shown_once = false
+	_timer_started = false
+	_elapsed_seconds = 0.0
+	timer.stop()
+	panel.visible = false
+	_restore_default_panel_size()
+	_update_play_time_label()

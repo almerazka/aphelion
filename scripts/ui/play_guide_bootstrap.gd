@@ -29,3 +29,10 @@ func get_formatted_elapsed() -> String:
 	if _play_guide_instance.has_method("get_formatted_elapsed"):
 		return String(_play_guide_instance.call("get_formatted_elapsed"))
 	return "00:00:00"
+
+
+func reset_session() -> void:
+	if _play_guide_instance == null or not is_instance_valid(_play_guide_instance):
+		return
+	if _play_guide_instance.has_method("reset_session"):
+		_play_guide_instance.call("reset_session")

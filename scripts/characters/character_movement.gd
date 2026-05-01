@@ -27,6 +27,8 @@ const INTERACTABLE_DIALOG_KEYS: Dictionary = {
 func _physics_process(_delta: float) -> void:
 	if not can_walk:
 		velocity = Vector2.ZERO
+		if has_node("/root/AudioManager"):
+			AudioManager.stop_walk_loop()
 		_play_idle()
 		move_and_slide()
 		return
@@ -36,8 +38,12 @@ func _physics_process(_delta: float) -> void:
 
 	if input_dir != Vector2.ZERO:
 		_last_dir = input_dir
+		if has_node("/root/AudioManager"):
+			AudioManager.start_walk_loop()
 		_play_walk(input_dir)
 	else:
+		if has_node("/root/AudioManager"):
+			AudioManager.stop_walk_loop()
 		_play_idle()
 
 	move_and_slide()
@@ -91,6 +97,10 @@ func _try_talk_to_nearest_npc() -> void:
 
 	_dialog_active = true
 	can_walk = false
+	if has_node("/root/AudioManager"):
+		AudioManager.lock_scene_bgm()
+		AudioManager.stop_walk_loop()
+		AudioManager.play_talking_bgm()
 	_active_dialog_npc_key = key
 	_active_shadow_dialog = in_shadow_world
 
@@ -118,6 +128,8 @@ func _on_dialogue_ended() -> void:
 	_active_dialog_npc_key = ""
 	_active_shadow_dialog = false
 	_dialog_active = false
+	if has_node("/root/AudioManager"):
+		AudioManager.unlock_scene_bgm()
 	can_walk = true
 	_try_auto_enter_execution_scene()
 

@@ -14,6 +14,7 @@ func _ready() -> void:
 
 
 func _on_start_pressed() -> void:
+	_reset_new_run_state()
 	if has_node("/root/SceneTransition"):
 		SceneTransition.change_scene(start_scene_path)
 	else:
@@ -22,3 +23,12 @@ func _on_start_pressed() -> void:
 
 func _on_exit_pressed() -> void:
 	get_tree().quit()
+
+
+func _reset_new_run_state() -> void:
+	if has_node("/root/ClueInventory"):
+		ClueInventory.reset_progress()
+	if has_node("/root/WorldState"):
+		WorldState.reset_state()
+	if has_node("/root/PlayGuide"):
+		PlayGuide.reset_session()

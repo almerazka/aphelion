@@ -22,6 +22,7 @@ WorldState="*res://scripts/world/world_state.gd"
 ClueInventory="*res://scripts/systems/clue_inventory.gd"
 PlayGuide="*res://scripts/ui/play_guide_bootstrap.gd"
 SceneTransition="*res://scripts/world/scene_transition.gd"
+AudioManager="*res://scripts/audio/audio_manager.gd"
 
 [dialogic]
 
