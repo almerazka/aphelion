@@ -1,0 +1,40 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/clue_inventory_panel.gd" id="1_hfclu"]
+
+[node name="ClueInventoryUI" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_hfclu")
+
+[node name="BookPanel" type="PanelContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -340.0
+offset_top = -210.0
+offset_right = 340.0
+offset_bottom = 210.0
+
+[node name="Margin" type="MarginContainer" parent="BookPanel"]
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="VBox" type="VBoxContainer" parent="BookPanel/Margin"]
+
+[node name="Title" type="Label" parent="BookPanel/Margin/VBox"]
+text = "DETECTIVE NOTEBOOK"
+horizontal_alignment = 1
+
+[node name="Hint" type="Label" parent="BookPanel/Margin/VBox"]
+text = "Tekan C untuk tutup"
+modulate = Color(0.72, 0.72, 0.72, 1)
+
+[node name="Content" type="RichTextLabel" parent="BookPanel/Margin/VBox"]
+bbcode_enabled = true
+scroll_active = true
+size_flags_vertical = 3
+fit_content = false

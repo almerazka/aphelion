@@ -5953,6 +5953,8 @@ position = Vector2(292, 190)
 
 [node name="Ethan" parent="." unique_id=2123863911 instance=ExtResource("980_ethan")]
 position = Vector2(744, 312)
+speed = null
+talk_action = null
 
 [node name="SpawnFromLobby" type="Marker2D" parent="." unique_id=980101]
 position = Vector2(744, 312)

@@ -8,6 +8,7 @@ extends CharacterBody2D
 @onready var interaction_area: Area2D = get_node_or_null("InteractionArea")
 var _last_dir: Vector2 = Vector2.DOWN
 var _dialog_active: bool = false
+var _active_dialog_npc_key: String = ""
 const DIALOG_NAME_COLOR := Color(1, 1, 1, 1)
 
 const INTERACTABLE_DIALOG_KEYS: Dictionary = {
@@ -78,6 +79,7 @@ func _try_talk_to_nearest_npc() -> void:
 
 	_dialog_active = true
 	can_walk = false
+	_active_dialog_npc_key = key
 
 	if not Dialogic.timeline_ended.is_connected(_on_dialogue_ended):
 		Dialogic.timeline_ended.connect(_on_dialogue_ended)
@@ -93,6 +95,9 @@ func _on_dialogue_ended() -> void:
 		Dialogic.timeline_ended.disconnect(_on_dialogue_ended)
 	if Dialogic.Text.speaker_updated.is_connected(_on_dialogic_speaker_updated):
 		Dialogic.Text.speaker_updated.disconnect(_on_dialogic_speaker_updated)
+	if has_node("/root/ClueInventory") and not _active_dialog_npc_key.is_empty():
+		ClueInventory.unlock_npc_clues(_active_dialog_npc_key)
+	_active_dialog_npc_key = ""
 	_dialog_active = false
 	can_walk = true
 

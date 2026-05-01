@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bobfjr072uvo0" path="res://assets/characters/Ethan/ethan2.png" id="1_hglu8"]
 [ext_resource type="Texture2D" uid="uid://cgt6d1m022x4x" path="res://assets/characters/Ethan/ethan3.png" id="2_gkbx8"]
 [ext_resource type="Script" uid="uid://cf7ywp2x10jlx" path="res://scripts/characters/character_movement.gd" id="3_jik3d"]
+[ext_resource type="PackedScene" path="res://scenes/ui/clue_inventory.tscn" id="4_w7m11"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_omk8j"]
 atlas = ExtResource("1_hglu8")
@@ -110,3 +111,5 @@ position = Vector2(0, -24)
 zoom = Vector2(1.5, 1.5)
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
+
+[node name="ClueInventoryUI" parent="." instance=ExtResource("4_w7m11")]
