@@ -129,7 +129,7 @@ func get_unlocked_sections() -> Array[Dictionary]:
 			"key": "shadow_dominic",
 			"name": "SHADOW CLUE - DOMINIC",
 			"clues": [
-				"Dominic admitted the victim received a special last drink without a guest sticker."
+				"Valerie's drink was the only one served personally by Dominic after the stickers had run out."
 			]
 		})
 	return sections

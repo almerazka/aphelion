@@ -5753,7 +5753,7 @@ sources/71 = SubResource("TileSetAtlasSource_w4b0y")
 sources/72 = SubResource("TileSetAtlasSource_uxmgn")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exit_lobby_garden"]
-size = Vector2(233, 18)
+size = Vector2(341, 62)
 
 [node name="garden" type="Node2D" unique_id=89662780]
 script = ExtResource("991_spawn_garden")
@@ -5805,5 +5805,5 @@ target_scene = "res://scenes/main_menu/lobby_1.tscn"
 target_spawn_marker = &"SpawnFromGarden"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitToLobby" unique_id=980503]
-position = Vector2(1.5, 1)
+position = Vector2(11.5, -21)
 shape = SubResource("RectangleShape2D_exit_lobby_garden")

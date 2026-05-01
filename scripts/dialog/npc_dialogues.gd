@@ -42,9 +42,10 @@ static func _generic_shadow_timeline(speaker_name: String) -> String:
 
 static func _dominic_shadow_timeline() -> String:
 	return """
-Dominic: She was the last person to arrive and we had already run out of those stickers.
-Dominic: Because everyone gets a welcoming drink. I am not trying to differentiate her from the others.
-Dominic: ...Fine. I did it.
+Ethan: You've been such a great host, but I noticed the victim's glass was specifically served without a guest sticker. Why was that one special?
+Dominic: She was the last person to arrive and we've already run out of those stickers.
+Ethan: The victim seemed to trust you more than anyone here. Is that why they didn't think twice when you handed them that last drink?
+Dominic: Because everyone gets a welcoming drink. I'm not trying to differentiate her from the others.
 """
 
 

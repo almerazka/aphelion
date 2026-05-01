@@ -6389,7 +6389,7 @@ sources/145 = SubResource("TileSetAtlasSource_e0vg5")
 sources/146 = SubResource("TileSetAtlasSource_amvf6")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exit_lobby_party"]
-size = Vector2(196, 52)
+size = Vector2(358, 93)
 
 [node name="party" type="Node2D" unique_id=1654834358]
 script = ExtResource("991_spawn_party")
@@ -6432,5 +6432,5 @@ target_scene = "res://scenes/main_menu/lobby_1.tscn"
 target_spawn_marker = &"SpawnFromParty"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitToLobby" unique_id=980203]
-position = Vector2(2, 2)
+position = Vector2(3, 22.5)
 shape = SubResource("RectangleShape2D_exit_lobby_party")

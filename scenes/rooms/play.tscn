@@ -5628,7 +5628,7 @@ sources/48 = SubResource("TileSetAtlasSource_r450x")
 sources/49 = SubResource("TileSetAtlasSource_a4n0u")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exit_lobby2_play"]
-size = Vector2(143, 21)
+size = Vector2(206, 55)
 
 [node name="play" type="Node2D" unique_id=292804186]
 script = ExtResource("991_spawn_play")
@@ -5674,5 +5674,5 @@ target_scene = "res://scenes/main_menu/lobby_2.tscn"
 target_spawn_marker = &"SpawnFromPlayroom"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitToLobby2" unique_id=1194909990]
-position = Vector2(1.5, -1.5)
+position = Vector2(3, 11.5)
 shape = SubResource("RectangleShape2D_exit_lobby2_play")

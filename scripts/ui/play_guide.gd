@@ -14,8 +14,10 @@ var _shadow_hint_shown_once: bool = false
 var _lobby_intro_shown_once: bool = false
 var _intro_guide_shown_once: bool = false
 var _execution_room_hint_shown_once: bool = false
+var _default_panel_offsets: Vector4 = Vector4.ZERO
 
 func _ready() -> void:
+	_default_panel_offsets = Vector4(panel.offset_left, panel.offset_top, panel.offset_right, panel.offset_bottom)
 	if not timer.timeout.is_connected(_on_display_timer_timeout):
 		timer.timeout.connect(_on_display_timer_timeout)
 	var tree := get_tree()
@@ -97,8 +99,7 @@ func _maybe_show_intro_guide_once() -> void:
 	var intro_text := "[center][color=#9efcff][b]PLAY GUIDE[/b][/color][/center]\n"
 	intro_text += "[center][color=#e8f7ff]Press `Space` to talk to NPCs[/color][/center]\n"
 	intro_text += "[center][color=#e8f7ff]Press `C` to open the Detective Notebook[/color][/center]\n"
-	intro_text += "\n[center][color=#8bd8ff]Gather information first. Once all NPCs have been questioned,[/color][/center]\n"
-	intro_text += "[center][color=#8bd8ff]the next instruction will appear automatically.[/color][/center]"
+	intro_text += "\n[center][color=#8bd8ff]Gather information first. Once all NPCs have been questioned,[/color][/center]"
 	var duration := intro_duration_seconds
 	var current_scene := get_tree().current_scene
 	if current_scene != null and current_scene.scene_file_path == "res://scenes/main_menu/lobby_1.tscn" and not _lobby_intro_shown_once:
@@ -110,6 +111,7 @@ func _maybe_show_intro_guide_once() -> void:
 
 func _show_ready_execution_hint() -> void:
 	_showing_execution_prompt = false
+	_restore_default_panel_size()
 	var text := "[center][color=#ffd79a][b]ALL CLUES COLLECTED[/b][/color][/center]\n"
 	text += "[center][color=#fff2d8]Proceeding to the execution room...[/color][/center]"
 	_show_text(text, 1.8)
@@ -120,6 +122,7 @@ func _show_execution_room_hint() -> void:
 		return
 	_execution_room_hint_shown_once = true
 	_showing_execution_prompt = false
+	_set_compact_execution_panel()
 	var text := "[center][color=#ffd79a][b]PRESS E TO ACCUSE[/b][/color][/center]"
 	_show_text(text, execution_prompt_duration_seconds)
 
@@ -128,8 +131,9 @@ func _show_execution_completed_hint() -> void:
 	if _shadow_hint_shown_once:
 		return
 	_shadow_hint_shown_once = true
+	_restore_default_panel_size()
 	var text := "[center][color=#b5ccff][b]SHADOW WORLD UNLOCKED[/b][/color][/center]\n"
-	text += "[center][color=#dfe9ff]Press `R` for Real World, `S` for Shadow World to find hidden clues.[/color][/center]"
+	text += "[center][color=#dfe9ff]Press `R` for Real World.\n Press `S` for Shadow World to find hidden clues.[/color][/center]"
 	_show_text(text, shadow_prompt_duration_seconds)
 
 
@@ -159,3 +163,20 @@ func _on_display_timer_timeout() -> void:
 	if _showing_execution_prompt:
 		return
 	panel.visible = false
+	_restore_default_panel_size()
+
+
+func _set_compact_execution_panel() -> void:
+	panel.offset_left = -315.0
+	panel.offset_right = 315.0
+	panel.offset_top = -45.0
+	panel.offset_bottom = 45.0
+
+
+func _restore_default_panel_size() -> void:
+	if _default_panel_offsets == Vector4.ZERO:
+		return
+	panel.offset_left = _default_panel_offsets.x
+	panel.offset_top = _default_panel_offsets.y
+	panel.offset_right = _default_panel_offsets.z
+	panel.offset_bottom = _default_panel_offsets.w
