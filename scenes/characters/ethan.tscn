@@ -80,6 +80,7 @@ animations = [{
 size = Vector2(43, 22)
 
 [node name="Ethan" type="CharacterBody2D" unique_id=2123863911]
+collision_mask = 3
 script = ExtResource("3_jik3d")
 can_walk = true
 

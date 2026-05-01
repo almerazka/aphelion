@@ -21,6 +21,7 @@ animations = [{
 size = Vector2(38, 86)
 
 [node name="Victoria" type="CharacterBody2D" unique_id=1204560078]
+collision_layer = 2
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1890252997]
 scale = Vector2(0.3, 0.3)

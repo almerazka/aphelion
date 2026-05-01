@@ -21,8 +21,10 @@ animations = [{
 size = Vector2(38, 86)
 
 [node name="Dominic" type="CharacterBody2D" unique_id=1204560078]
+collision_layer = 2
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=496499535]
+visibility_layer = 2
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_n5ceh")
 animation = &"idle"
