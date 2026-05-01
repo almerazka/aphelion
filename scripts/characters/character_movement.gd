@@ -3,14 +3,15 @@ extends CharacterBody2D
 @export var speed: float = 150.0
 @export var can_walk: bool = false
 @export var talk_action: StringName = &"talk"
-@export var execution_action: StringName = &"execution"
-@export_file("*.tscn") var execution_scene_path: String = "res://scenes/rooms/execution_living.tscn"
+@export_file("*.tscn") var execution_scene_path: String = "res://scenes/rooms/execution.tscn"
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var interaction_area: Area2D = get_node_or_null("InteractionArea")
 var _last_dir: Vector2 = Vector2.DOWN
 var _dialog_active: bool = false
 var _active_dialog_npc_key: String = ""
+var _active_shadow_dialog: bool = false
+var _execution_transition_queued: bool = false
 const DIALOG_NAME_COLOR := Color(1, 1, 1, 1)
 const DIALOG_PANEL_BG := Color(0.02, 0.02, 0.03, 0.92)
 const DIALOG_PANEL_BORDER := Color(0.71, 0.63, 0.45, 0.78)
@@ -46,10 +47,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _dialog_active:
 		return
 	if event.is_action_pressed(talk_action):
+		if _is_clue_inventory_open():
+			return
 		_try_talk_to_nearest_npc()
-		return
-	if event.is_action_pressed(execution_action):
-		_try_enter_execution_scene()
 
 
 func _try_talk_to_nearest_npc() -> void:
@@ -77,7 +77,12 @@ func _try_talk_to_nearest_npc() -> void:
 		return
 
 	var key: String = String(INTERACTABLE_DIALOG_KEYS[String(nearest_npc.name).to_lower()])
-	var timeline_text: String = NpcDialogues.get_timeline_text(key)
+	var in_shadow_world := _is_shadow_world()
+	var timeline_text: String = ""
+	if in_shadow_world:
+		timeline_text = NpcDialogues.get_shadow_timeline_text(key)
+	else:
+		timeline_text = NpcDialogues.get_timeline_text(key)
 	if timeline_text.is_empty():
 		return
 
@@ -87,6 +92,7 @@ func _try_talk_to_nearest_npc() -> void:
 	_dialog_active = true
 	can_walk = false
 	_active_dialog_npc_key = key
+	_active_shadow_dialog = in_shadow_world
 
 	if not Dialogic.timeline_ended.is_connected(_on_dialogue_ended):
 		Dialogic.timeline_ended.connect(_on_dialogue_ended)
@@ -98,8 +104,26 @@ func _try_talk_to_nearest_npc() -> void:
 	_apply_dialog_panel_style()
 
 
-func _try_enter_execution_scene() -> void:
-	if _dialog_active:
+func _on_dialogue_ended() -> void:
+	if Dialogic.timeline_ended.is_connected(_on_dialogue_ended):
+		Dialogic.timeline_ended.disconnect(_on_dialogue_ended)
+	if Dialogic.Text.speaker_updated.is_connected(_on_dialogic_speaker_updated):
+		Dialogic.Text.speaker_updated.disconnect(_on_dialogic_speaker_updated)
+	if has_node("/root/ClueInventory") and not _active_dialog_npc_key.is_empty():
+		if _active_shadow_dialog:
+			if _active_dialog_npc_key == "dominic":
+				ClueInventory.unlock_shadow_dominic_clue()
+		else:
+			ClueInventory.unlock_npc_clues(_active_dialog_npc_key)
+	_active_dialog_npc_key = ""
+	_active_shadow_dialog = false
+	_dialog_active = false
+	can_walk = true
+	_try_auto_enter_execution_scene()
+
+
+func _try_auto_enter_execution_scene() -> void:
+	if _execution_transition_queued:
 		return
 	if execution_scene_path.is_empty():
 		return
@@ -109,19 +133,27 @@ func _try_enter_execution_scene() -> void:
 		return
 	if get_tree().current_scene != null and get_tree().current_scene.scene_file_path == execution_scene_path:
 		return
-	get_tree().change_scene_to_file(execution_scene_path)
+	_execution_transition_queued = true
+	if has_node("/root/SceneTransition"):
+		SceneTransition.change_scene(execution_scene_path)
+	else:
+		get_tree().change_scene_to_file(execution_scene_path)
 
 
-func _on_dialogue_ended() -> void:
-	if Dialogic.timeline_ended.is_connected(_on_dialogue_ended):
-		Dialogic.timeline_ended.disconnect(_on_dialogue_ended)
-	if Dialogic.Text.speaker_updated.is_connected(_on_dialogic_speaker_updated):
-		Dialogic.Text.speaker_updated.disconnect(_on_dialogic_speaker_updated)
-	if has_node("/root/ClueInventory") and not _active_dialog_npc_key.is_empty():
-		ClueInventory.unlock_npc_clues(_active_dialog_npc_key)
-	_active_dialog_npc_key = ""
-	_dialog_active = false
-	can_walk = true
+func _is_clue_inventory_open() -> bool:
+	var clue_ui := get_node_or_null("ClueInventoryUI")
+	if clue_ui == null:
+		return false
+	var panel := clue_ui.get_node_or_null("BookPanel")
+	if panel is CanvasItem:
+		return (panel as CanvasItem).visible
+	return false
+
+
+func _is_shadow_world() -> bool:
+	if not has_node("/root/WorldState"):
+		return false
+	return WorldState.is_shadow_world
 
 
 func _on_dialogic_speaker_updated(_character: DialogicCharacter) -> void:

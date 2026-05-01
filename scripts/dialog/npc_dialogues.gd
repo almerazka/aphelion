@@ -18,6 +18,38 @@ static func get_timeline_text(key: String) -> String:
 			return ""
 
 
+static func get_shadow_timeline_text(key: String) -> String:
+	match key.to_lower():
+		"dominic":
+			return _dominic_shadow_timeline()
+		"victoria":
+			return _generic_shadow_timeline("Victoria")
+		"julian":
+			return _generic_shadow_timeline("Julian")
+		"luna":
+			return _generic_shadow_timeline("Luna")
+		"marcus":
+			return _generic_shadow_timeline("Marcus")
+		_:
+			return ""
+
+
+static func _generic_shadow_timeline(speaker_name: String) -> String:
+	return ("""
+Ethan: ...
+%s: ...
+""" % speaker_name)
+
+
+static func _dominic_shadow_timeline() -> String:
+	return """
+Ethan: You have been such a great host, but I noticed the victim's glass was specifically served without a guest sticker. Why was that one special?
+Dominic: She was the last person to arrive and we had already run out of those stickers.
+Ethan: The victim seemed to trust you more than anyone here. Is that why they did not think twice when you handed them that last drink?
+Dominic: Because everyone gets a welcoming drink. I am not trying to differentiate her from the others.
+"""
+
+
 static func _dominic_timeline() -> String:
 	return """
 Ethan: Let's start with the basics - what's your name?

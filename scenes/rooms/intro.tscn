@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://ca1pqnq3bduou"]
+[gd_scene format=4 uid="uid://k6ah7d10sgxf"]
 
 [ext_resource type="Script" uid="uid://bfjvcdpmvu25q" path="res://scripts/world/scene_spawn.gd" id="1_xjk0h"]
 [ext_resource type="Texture2D" uid="uid://c2gdeq1ytwrs5" path="res://assets/area/Tileset/Floors_48x48.png" id="2_twbq2"]

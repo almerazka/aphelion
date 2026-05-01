@@ -3,6 +3,8 @@ extends Node2D
 @export_file("*.tscn") var gameplay_scene_path: String = "res://scenes/main_menu/lobby_1.tscn"
 @export var cutscene_zoom: Vector2 = Vector2(2.4, 2.4)
 @export var cutscene_camera_offset: Vector2 = Vector2(-110.0, 0.0)
+@export var intro_fade_in_duration: float = 1.35
+@export var scene_entry_hold_seconds: float = 0.16
 
 @onready var fade_rect: ColorRect = $IntroOverlay/FadeRect
 @onready var cutscene_camera: Camera2D = $CutsceneCamera
@@ -19,8 +21,8 @@ func _ready() -> void:
 
 func _run_scene_intro() -> void:
 	fade_rect.color.a = 1.0
-	await get_tree().create_timer(0.08).timeout
-	await _fade_from_black(1.1)
+	await get_tree().create_timer(scene_entry_hold_seconds).timeout
+	await _fade_from_black(intro_fade_in_duration)
 	await _play_dialogic_timeline(CRIME_SCENE_TIMELINE_TEXT)
 	await _fade_to_black(1.0)
 	get_tree().change_scene_to_file(gameplay_scene_path)
@@ -142,11 +144,15 @@ func _compute_room_center_from_tilemaps() -> Vector2:
 func _fade_from_black(duration: float) -> void:
 	fade_rect.color.a = 1.0
 	var tween := create_tween()
+	tween.set_ease(Tween.EASE_OUT)
+	tween.set_trans(Tween.TRANS_SINE)
 	tween.tween_property(fade_rect, "color:a", 0.0, duration)
 	await tween.finished
 
 
 func _fade_to_black(duration: float) -> void:
 	var tween := create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_SINE)
 	tween.tween_property(fade_rect, "color:a", 1.0, duration)
 	await tween.finished

@@ -2,7 +2,7 @@ extends CanvasLayer
 
 @export var intro_duration_seconds: float = 8.0
 @export var lobby_intro_duration_seconds: float = 8.0
-@export var execution_prompt_duration_seconds: float = 0.0
+@export var execution_prompt_duration_seconds: float = 5.0
 @export var shadow_prompt_duration_seconds: float = 14.0
 
 @onready var panel: PanelContainer = $CenterGuidePanel
@@ -13,6 +13,7 @@ var _showing_execution_prompt: bool = false
 var _shadow_hint_shown_once: bool = false
 var _lobby_intro_shown_once: bool = false
 var _intro_guide_shown_once: bool = false
+var _execution_room_hint_shown_once: bool = false
 
 func _ready() -> void:
 	if not timer.timeout.is_connected(_on_display_timer_timeout):
@@ -73,7 +74,11 @@ func _refresh() -> void:
 	if not has_node("/root/ClueInventory"):
 		return
 
-	if ClueInventory.has_completed_execution():
+	if _is_execution_scene():
+		_show_execution_room_hint()
+		return
+
+	if has_node("/root/WorldState") and WorldState.shadow_unlocked:
 		_show_execution_completed_hint()
 		return
 
@@ -92,7 +97,6 @@ func _maybe_show_intro_guide_once() -> void:
 	var intro_text := "[center][color=#9efcff][b]PLAY GUIDE[/b][/color][/center]\n"
 	intro_text += "[center][color=#e8f7ff]Press `Space` to talk to NPCs[/color][/center]\n"
 	intro_text += "[center][color=#e8f7ff]Press `C` to open the Detective Notebook[/color][/center]\n"
-	intro_text += "[center][color=#e8f7ff]Press `R` to return to the Real World[/color][/center]\n"
 	intro_text += "\n[center][color=#8bd8ff]Gather information first. Once all NPCs have been questioned,[/color][/center]\n"
 	intro_text += "[center][color=#8bd8ff]the next instruction will appear automatically.[/color][/center]"
 	var duration := intro_duration_seconds
@@ -105,9 +109,18 @@ func _maybe_show_intro_guide_once() -> void:
 
 
 func _show_ready_execution_hint() -> void:
-	_showing_execution_prompt = true
-	var text := "[center][color=#ffd79a][b]PRESS E TO READY EXECUTION[/b][/color][/center]\n"
-	text += "[center][color=#fff2d8]You have questioned all core NPCs.[/color][/center]"
+	_showing_execution_prompt = false
+	var text := "[center][color=#ffd79a][b]ALL CLUES COLLECTED[/b][/color][/center]\n"
+	text += "[center][color=#fff2d8]Proceeding to the execution room...[/color][/center]"
+	_show_text(text, 1.8)
+
+
+func _show_execution_room_hint() -> void:
+	if _execution_room_hint_shown_once:
+		return
+	_execution_room_hint_shown_once = true
+	_showing_execution_prompt = false
+	var text := "[center][color=#ffd79a][b]PRESS E TO ACCUSE[/b][/color][/center]"
 	_show_text(text, execution_prompt_duration_seconds)
 
 
@@ -116,7 +129,7 @@ func _show_execution_completed_hint() -> void:
 		return
 	_shadow_hint_shown_once = true
 	var text := "[center][color=#b5ccff][b]SHADOW WORLD UNLOCKED[/b][/color][/center]\n"
-	text += "[center][color=#dfe9ff]Press `S` to enter the Shadow World.[/color][/center]"
+	text += "[center][color=#dfe9ff]Press `R` for Real World, `S` for Shadow World to find hidden clues.[/color][/center]"
 	_show_text(text, shadow_prompt_duration_seconds)
 
 
@@ -133,6 +146,13 @@ func _is_gameplay_scene() -> bool:
 	if current_scene == null:
 		return false
 	return current_scene.get_node_or_null("Ethan") != null
+
+
+func _is_execution_scene() -> bool:
+	var current_scene := get_tree().current_scene
+	if current_scene == null:
+		return false
+	return current_scene.scene_file_path == "res://scenes/rooms/execution.tscn"
 
 
 func _on_display_timer_timeout() -> void:

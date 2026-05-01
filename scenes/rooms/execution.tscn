@@ -8,17 +8,226 @@
 [ext_resource type="PackedScene" uid="uid://be6d30mx8c5ud" path="res://scenes/characters/luna.tscn" id="6_6kq1p"]
 [ext_resource type="PackedScene" uid="uid://dy24ed1x5c5a5" path="res://scenes/characters/marcus.tscn" id="7_x3y1g"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_suspect_blocker"]
+size = Vector2(39, 60.5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_confirmpanel"]
+bg_color = Color(0.98, 0.98, 0.98, 0.97)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.18, 0.18, 0.18, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 4
+
 [node name="living" unique_id=602755512 instance=ExtResource("1_alfc2")]
 script = ExtResource("2_ocens")
 ethan_node_path = NodePath("Ethan")
 center_marker_path = NodePath("ExecutionCenter")
 disable_exit_area = true
 exit_area_path = NodePath("ExitToLobby")
-dominic_scene = ExtResource("3_q1ccr")
-victoria_scene = ExtResource("4_ru6bl")
-julian_scene = ExtResource("5_wln1w")
-luna_scene = ExtResource("6_6kq1p")
-marcus_scene = ExtResource("7_x3y1g")
+execution_action = &"execution"
+correct_culprit_key = "julian"
+execution_input_unlock_delay_seconds = 5.0
+retry_scene_path = "res://scenes/main_menu/lobby_1.tscn"
+retry_spawn_marker = &"SpawnFromLiving"
 
-[node name="ExecutionCenter" type="Marker2D" parent="." index="10" unique_id=1473404096]
+[node name="Victoria" parent="." index="8" unique_id=1204560078 instance=ExtResource("4_ru6bl")]
+position = Vector2(726, 323)
+
+[node name="Julian" parent="." index="9" unique_id=2089001237 instance=ExtResource("5_wln1w")]
+position = Vector2(803, 290)
+
+[node name="Luna" parent="." index="10" unique_id=1232217450 instance=ExtResource("6_6kq1p")]
+position = Vector2(882, 326)
+
+[node name="Marcus" parent="." index="11" unique_id=778415512 instance=ExtResource("7_x3y1g")]
+position = Vector2(955, 369)
+
+[node name="Dominic" parent="." index="12" unique_id=211882577 instance=ExtResource("3_q1ccr")]
+position = Vector2(663, 367)
+
+[node name="ExecutionCenter" type="Marker2D" parent="." index="15" unique_id=1473404096]
 position = Vector2(790, 430)
+
+[node name="SuspectBlocker" type="StaticBody2D" parent="." index="16" unique_id=764921105]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="SuspectBlocker" index="0" unique_id=1570494187]
+position = Vector2(954.5, 444.75)
+shape = SubResource("RectangleShape2D_suspect_blocker")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="SuspectBlocker" index="1" unique_id=2100013979]
+position = Vector2(882.5, 399)
+shape = SubResource("RectangleShape2D_suspect_blocker")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="SuspectBlocker" index="2" unique_id=2026480043]
+position = Vector2(803, 363)
+shape = SubResource("RectangleShape2D_suspect_blocker")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="SuspectBlocker" index="3" unique_id=2044334888]
+position = Vector2(725, 397)
+shape = SubResource("RectangleShape2D_suspect_blocker")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SuspectBlocker" index="4" unique_id=135801449]
+position = Vector2(663, 441.5)
+shape = SubResource("RectangleShape2D_suspect_blocker")
+
+[node name="ExecutionUI" type="CanvasLayer" parent="." index="17" unique_id=1495045601]
+layer = 30
+
+[node name="DimOverlay" type="ColorRect" parent="ExecutionUI" index="0" unique_id=573801244]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.72)
+
+[node name="ChoosePanel" type="PanelContainer" parent="ExecutionUI" index="1" unique_id=453713623]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -130.0
+offset_right = 280.0
+offset_bottom = 130.0
+
+[node name="Margin" type="MarginContainer" parent="ExecutionUI/ChoosePanel" index="0" unique_id=1610723463]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="ExecutionUI/ChoosePanel/Margin" index="0" unique_id=1129404441]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="ExecutionUI/ChoosePanel/Margin/VBox" index="0" unique_id=1264221064]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Choose the killer"
+horizontal_alignment = 1
+
+[node name="SuspectPortrait" type="TextureRect" parent="ExecutionUI/ChoosePanel/Margin/VBox" index="1" unique_id=627429511]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SuspectName" type="Label" parent="ExecutionUI/ChoosePanel/Margin/VBox" index="2" unique_id=2034617788]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Suspect"
+horizontal_alignment = 1
+
+[node name="SuspectOption" type="OptionButton" parent="ExecutionUI/ChoosePanel/Margin/VBox" index="3" unique_id=1240085166]
+layout_mode = 2
+
+[node name="AccuseButton" type="Button" parent="ExecutionUI/ChoosePanel/Margin/VBox" index="4" unique_id=2009208462]
+layout_mode = 2
+text = "Accuse"
+
+[node name="CloseButton" type="Button" parent="ExecutionUI/ChoosePanel/Margin/VBox" index="5" unique_id=2121189940]
+layout_mode = 2
+text = "Close"
+
+[node name="ConfirmPanel" type="PanelContainer" parent="ExecutionUI" index="2" unique_id=1440153878]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -90.0
+offset_right = 260.0
+offset_bottom = 90.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_confirmpanel")
+
+[node name="Margin" type="MarginContainer" parent="ExecutionUI/ConfirmPanel" index="0" unique_id=2069399153]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="ExecutionUI/ConfirmPanel/Margin" index="0" unique_id=927654089]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ConfirmLabel" type="Label" parent="ExecutionUI/ConfirmPanel/Margin/VBox" index="0" unique_id=1500362673]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.1, 0.1, 0.1, 1)
+theme_override_font_sizes/font_size = 20
+text = "Are you sure?"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="ExecutionUI/ConfirmPanel/Margin/VBox" index="1" unique_id=1980251758]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="YesButton" type="Button" parent="ExecutionUI/ConfirmPanel/Margin/VBox/HBox" index="0" unique_id=951578275]
+layout_mode = 2
+text = "Yes"
+
+[node name="NoButton" type="Button" parent="ExecutionUI/ConfirmPanel/Margin/VBox/HBox" index="1" unique_id=2134629622]
+layout_mode = 2
+text = "No"
+
+[node name="ResultPanel" type="PanelContainer" parent="ExecutionUI" index="3" unique_id=657481307]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -95.0
+offset_right = 260.0
+offset_bottom = 95.0
+
+[node name="Margin" type="MarginContainer" parent="ExecutionUI/ResultPanel" index="0" unique_id=1843127802]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="ExecutionUI/ResultPanel/Margin" index="0" unique_id=397306510]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ResultLabel" type="Label" parent="ExecutionUI/ResultPanel/Margin/VBox" index="0" unique_id=1128638073]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Result"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="ExecutionUI/ResultPanel/Margin/VBox" index="1" unique_id=2135397872]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="TryAgainButton" type="Button" parent="ExecutionUI/ResultPanel/Margin/VBox/HBox" index="0" unique_id=1347101990]
+layout_mode = 2
+text = "Try Again"
+
+[node name="FinishButton" type="Button" parent="ExecutionUI/ResultPanel/Margin/VBox/HBox" index="1" unique_id=2128293409]
+layout_mode = 2
+text = "Finish"

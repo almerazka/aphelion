@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bobfjr072uvo0" path="res://assets/characters/Ethan/ethan2.png" id="1_hglu8"]
 [ext_resource type="Texture2D" uid="uid://cgt6d1m022x4x" path="res://assets/characters/Ethan/ethan3.png" id="2_gkbx8"]
 [ext_resource type="Script" uid="uid://cf7ywp2x10jlx" path="res://scripts/characters/character_movement.gd" id="3_jik3d"]
-[ext_resource type="PackedScene" path="res://scenes/ui/clue_inventory.tscn" id="4_w7m11"]
+[ext_resource type="PackedScene" uid="uid://djlpw1majywxg" path="res://scenes/ui/clue_inventory.tscn" id="4_w7m11"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_omk8j"]
 atlas = ExtResource("1_hglu8")
@@ -81,7 +81,7 @@ animations = [{
 size = Vector2(43, 22)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_interaction"]
-radius = 72.0
+radius = 59.211487
 
 [node name="Ethan" type="CharacterBody2D" unique_id=2123863911]
 collision_mask = 3
@@ -97,12 +97,11 @@ animation = &"walk_up"
 position = Vector2(0.5, 34)
 shape = SubResource("RectangleShape2D_a6g5r")
 
-[node name="InteractionArea" type="Area2D" parent="."]
+[node name="InteractionArea" type="Area2D" parent="." unique_id=2036372991]
 collision_mask = 2
-monitoring = true
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=407608581]
 position = Vector2(0, 8)
 shape = SubResource("CircleShape2D_interaction")
 
@@ -112,4 +111,4 @@ zoom = Vector2(1.5, 1.5)
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 
-[node name="ClueInventoryUI" parent="." instance=ExtResource("4_w7m11")]
+[node name="ClueInventoryUI" parent="." unique_id=797129515 instance=ExtResource("4_w7m11")]

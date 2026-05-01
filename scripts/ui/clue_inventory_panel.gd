@@ -47,12 +47,12 @@ func _is_dialog_running() -> bool:
 
 func _update_content() -> void:
 	if not has_node("/root/ClueInventory"):
-		content_label.text = "[color=#ff9090]ClueInventory autoload belum aktif.[/color]"
+		content_label.text = "[color=#ff9090]ClueInventory autoload is not active yet.[/color]"
 		return
 
 	var sections: Array[Dictionary] = ClueInventory.get_unlocked_sections()
 	if sections.is_empty():
-		content_label.text = "[font_size=20][i]Belum ada clue.[/i]\n\nNgobrol dulu dengan NPC (tombol Space) untuk buka clue.[/font_size]"
+		content_label.text = "[font_size=20][i]No clues yet.[/i]\n\nTalk to NPCs first (press Space) to unlock clues.[/font_size]"
 		return
 
 	var lines: Array[String] = []

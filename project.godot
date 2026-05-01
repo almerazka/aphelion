@@ -21,6 +21,7 @@ Dialogic="*uid://ds2q0uclmolvu"
 WorldState="*res://scripts/world/world_state.gd"
 ClueInventory="*res://scripts/systems/clue_inventory.gd"
 PlayGuide="*res://scripts/ui/play_guide_bootstrap.gd"
+SceneTransition="*res://scripts/world/scene_transition.gd"
 
 [dialogic]
 

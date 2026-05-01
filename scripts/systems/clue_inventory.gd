@@ -49,6 +49,7 @@ const CLUES_BY_NPC := {
 var _unlocked_npc_keys: Dictionary = {}
 var _unlock_order: Array[String] = []
 var _execution_completed: bool = false
+var _shadow_dominic_clue_unlocked: bool = false
 
 
 func unlock_npc_clues(npc_key: String) -> bool:
@@ -90,6 +91,14 @@ func has_completed_execution() -> bool:
 	return _execution_completed
 
 
+func unlock_shadow_dominic_clue() -> bool:
+	if _shadow_dominic_clue_unlocked:
+		return false
+	_shadow_dominic_clue_unlocked = true
+	clues_updated.emit()
+	return true
+
+
 func get_unlocked_sections() -> Array[Dictionary]:
 	var sections: Array[Dictionary] = []
 	for key in _unlock_order:
@@ -100,5 +109,14 @@ func get_unlocked_sections() -> Array[Dictionary]:
 			"key": key,
 			"name": section_data.get("name", key.to_upper()),
 			"clues": section_data.get("clues", [])
+		})
+
+	if _shadow_dominic_clue_unlocked:
+		sections.append({
+			"key": "shadow_dominic",
+			"name": "SHADOW CLUE - DOMINIC",
+			"clues": [
+				"Dominic admitted the victim received a special last drink without a guest sticker."
+			]
 		})
 	return sections

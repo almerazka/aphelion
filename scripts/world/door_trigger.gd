@@ -13,6 +13,9 @@ func _on_body_entered(body: Node) -> void:
 		return
 	if body.name != "Ethan":
 		return
+	if has_node("/root/SceneTransition"):
+		SceneTransition.change_scene(target_scene, target_spawn_marker)
+		return
 	if not target_spawn_marker.is_empty():
 		get_tree().set_meta("aphelion_spawn_marker", target_spawn_marker)
 	get_tree().change_scene_to_file(target_scene)
