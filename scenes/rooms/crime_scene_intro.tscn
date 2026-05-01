@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://b34oe1uegl31j"]
+[gd_scene format=3 uid="uid://drp1q3jvvtwbj"]
 
-[ext_resource type="PackedScene" uid="uid://bv1q018eobb7l" path="res://scenes/rooms/crime_scene.tscn" id="1_crime_scene_base"]
+[ext_resource type="PackedScene" uid="uid://d0eu8uyibrmur" path="res://scenes/rooms/crime_scene.tscn" id="1_crime_scene_base"]
 [ext_resource type="Script" uid="uid://bcnaygs8qkb46" path="res://scripts/cutscene/crime_scene_intro.gd" id="2_crime_intro_script"]
 
 [node name="crime_scene" unique_id=943667003 instance=ExtResource("1_crime_scene_base")]

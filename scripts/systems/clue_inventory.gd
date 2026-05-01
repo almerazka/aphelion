@@ -37,7 +37,7 @@ const CLUES_BY_NPC := {
 		]
 	},
 	"marcus": {
-		"name": "MARCUS HALE",
+		"name": "MARCUS COLE",
 		"clues": [
 			"Marcus prepared all food and drinks, including tequila.",
 			"Valerie consumed food and drinks before showing signs of illness.",

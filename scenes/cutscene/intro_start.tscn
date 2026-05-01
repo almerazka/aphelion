@@ -1,15 +1,23 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://dpqnxn2v4enr"]
 
-[ext_resource type="PackedScene" path="res://scenes/cutscene/intro_room.tscn" id="1_intro_room"]
-[ext_resource type="Script" path="res://scripts/cutscene/intro_start.gd" id="2_intro_script"]
+[ext_resource type="PackedScene" uid="uid://cim8tuasrr3s1" path="res://scenes/cutscene/intro_room.tscn" id="1_intro_room"]
+[ext_resource type="Script" uid="uid://bg6rsy5lx5jde" path="res://scripts/cutscene/intro_start.gd" id="2_intro_script"]
+[ext_resource type="PackedScene" uid="uid://boaqj11esxorf" path="res://scenes/ui/global_background.tscn" id="3_i05wr"]
 
-[node name="intro" instance=ExtResource("1_intro_room")]
+[node name="intro" unique_id=61364588 instance=ExtResource("1_intro_room")]
 script = ExtResource("2_intro_script")
+crime_intro_scene_path = "res://scenes/cutscene/crime_scene_intro.tscn"
+cutscene_zoom = Vector2(1.52, 1.52)
+cutscene_camera_offset = Vector2(-24, 0)
+transition_fade_out_duration = 1.45
+transition_black_hold_seconds = 0.2
 
-[node name="IntroOverlay" type="CanvasLayer" parent="."]
+[node name="GlobalBackground2" parent="." index="0" unique_id=1064834065 instance=ExtResource("3_i05wr")]
+
+[node name="IntroOverlay" type="CanvasLayer" parent="." index="11" unique_id=1101959124]
 layer = 100
 
-[node name="FadeRect" type="ColorRect" parent="IntroOverlay"]
+[node name="FadeRect" type="ColorRect" parent="IntroOverlay" index="0" unique_id=947395590]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -18,8 +26,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
-[node name="CutsceneCamera" type="Camera2D" parent="."]
-enabled = true
+[node name="CutsceneCamera" type="Camera2D" parent="." index="12" unique_id=654711671]
 zoom = Vector2(1.35, 1.35)
 position_smoothing_enabled = true
 position_smoothing_speed = 6.0

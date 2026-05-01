@@ -46,6 +46,7 @@
 [ext_resource type="Texture2D" uid="uid://ntsxetcmnxed" path="res://assets/area/Play/Basement_Shadow_Singles_48x48_217.png" id="84_4e541"]
 [ext_resource type="Texture2D" uid="uid://ybq4dp6d7gqc" path="res://assets/area/Play/Basement_Shadow_Singles_48x48_56.png" id="85_3px3j"]
 [ext_resource type="Texture2D" uid="uid://cpgdfa1s64y6b" path="res://assets/area/Play/Basement_Shadow_Singles_48x48_57.png" id="86_dniv4"]
+[ext_resource type="PackedScene" uid="uid://boaqj11esxorf" path="res://scenes/ui/global_background.tscn" id="87_a7d2w"]
 [ext_resource type="Texture2D" uid="uid://dhi0h53i1xctj" path="res://assets/area/Play/Basement_Shadow_Singles_48x48_58.png" id="87_cmyud"]
 [ext_resource type="Texture2D" uid="uid://o62tqb0rcdi3" path="res://assets/area/Play/Basement_Shadow_Singles_48x48_59.png" id="88_1bmfi"]
 [ext_resource type="Texture2D" uid="uid://degv3lsfnubum" path="res://assets/area/Play/Basement_Shadow_Singles_48x48_60.png" id="89_gjk88"]
@@ -5842,10 +5843,12 @@ sources/202 = SubResource("TileSetAtlasSource_52e8k")
 sources/203 = SubResource("TileSetAtlasSource_tvyad")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exit_lobby_living"]
-size = Vector2(343, 84)
+size = Vector2(343, 67)
 
 [node name="living" type="Node2D" unique_id=163341521]
 script = ExtResource("991_spawn_living")
+
+[node name="GlobalBackground" parent="." unique_id=1064834065 instance=ExtResource("87_a7d2w")]
 
 [node name="Floor" type="TileMapLayer" parent="." unique_id=572079091]
 texture_filter = 3
@@ -5879,10 +5882,10 @@ tile_map_data = PackedByteArray("AAAQAAEAfQAAAAEAAAAQAAIAfQAAAAIAAAAQAAMAfQAAAAM
 tile_set = SubResource("TileSet_mso6m")
 
 [node name="Ethan" parent="." unique_id=2123863911 instance=ExtResource("983_ethan")]
-position = Vector2(790, 478)
+position = Vector2(790, 454)
 
 [node name="SpawnFromLobby" type="Marker2D" parent="." unique_id=980401]
-position = Vector2(790, 478)
+position = Vector2(789, 504)
 
 [node name="ExitToLobby" type="Area2D" parent="." unique_id=980402]
 position = Vector2(789, 577)

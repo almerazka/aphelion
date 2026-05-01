@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://boaqj11esxorf"]
+
+[ext_resource type="Texture2D" uid="uid://dg5sxf34kxqka" path="res://assets/ui/Background.jpeg" id="1_bg"]
+
+[node name="GlobalBackground" type="CanvasLayer" unique_id=1064834065]
+layer = -100
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=481745710]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1035.0
+offset_top = -708.0
+offset_right = 1162.0
+offset_bottom = 895.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_bg")
+expand_mode = 1
+stretch_mode = 6

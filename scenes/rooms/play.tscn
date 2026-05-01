@@ -59,6 +59,7 @@
 [ext_resource type="Texture2D" uid="uid://dfjt22dehv0g8" path="res://assets/area/ETC/Japanese_Interiors_Black_Shadow_Singles_48x48_58.png" id="52_wasie"]
 [ext_resource type="Texture2D" uid="uid://by8f42c25e56d" path="res://assets/area/Room Builder/B-C-D-E_Basement_01.png" id="53_1byxe"]
 [ext_resource type="PackedScene" uid="uid://cx1fsybn51ygk" path="res://scenes/characters/dominic.tscn" id="62_webwn"]
+[ext_resource type="PackedScene" uid="uid://boaqj11esxorf" path="res://scenes/ui/global_background.tscn" id="63_qaoxq"]
 [ext_resource type="PackedScene" uid="uid://c3sy7ebd6dhxp" path="res://scenes/characters/ethan.tscn" id="983_ethan_play"]
 [ext_resource type="Script" uid="uid://goei7n31gjtu" path="res://scripts/world/door_trigger.gd" id="990_door_play"]
 [ext_resource type="Script" uid="uid://bfjvcdpmvu25q" path="res://scripts/world/scene_spawn.gd" id="991_spawn_play"]
@@ -5633,6 +5634,8 @@ size = Vector2(206, 55)
 [node name="play" type="Node2D" unique_id=292804186]
 script = ExtResource("991_spawn_play")
 
+[node name="GlobalBackground" parent="." unique_id=1064834065 instance=ExtResource("63_qaoxq")]
+
 [node name="Floor" type="TileMapLayer" parent="." unique_id=1422076596]
 texture_filter = 3
 tile_map_data = PackedByteArray("AAAAAAIAAQAOAAEAAAABAAIAAQAPAAEAAAACAAIAAQAOAAEAAAADAAIAAQAPAAEAAAAEAAIAAQAOAAEAAAAFAAIAAQAPAAEAAAAGAAIAAQAOAAEAAAAHAAIAAQAPAAEAAAAIAAIAAQAOAAEAAAAJAAIAAQAPAAEAAAAKAAIAAQAOAAEAAAAKAAMAAQAOAAIAAAAJAAMAAQAPAAIAAAAIAAMAAQAOAAIAAAAHAAMAAQAPAAIAAAAGAAMAAQAOAAIAAAAFAAMAAQAPAAIAAAAEAAMAAQAOAAIAAAADAAMAAQAPAAIAAAACAAMAAQAOAAIAAAABAAMAAQAPAAIAAAAAAAMAAQAOAAIAAAAAAAQAAQAOAAEAAAABAAQAAQAPAAEAAAACAAQAAQAOAAEAAAADAAQAAQAPAAEAAAAEAAQAAQAOAAEAAAAFAAQAAQAPAAEAAAAGAAQAAQAOAAEAAAAHAAQAAQAPAAEAAAAIAAQAAQAOAAEAAAAJAAQAAQAPAAEAAAAKAAQAAQAOAAEAAAAGAAUAAQAOAAIAAAAFAAUAAQAPAAIAAAAEAAUAAQAOAAIAAAADAAUAAQAPAAIAAAACAAUAAQAOAAIAAAABAAUAAQAPAAIAAAAAAAUAAQAOAAIAAAALAAQAAQAPAAEAAAALAAMAAQAPAAIAAAAHAAUAAQAPAAIAAAAIAAUAAQAOAAIAAAAJAAUAAQAPAAIAAAAKAAUAAQAOAAIAAAALAAUAAQAPAAIAAAALAAIAAQAPAAEAAAAHAAAAAQAOAAEAAAAGAAEAAQAPAAIAAAAFAAEAAQAOAAIAAAAEAAEAAQAPAAIAAAAHAAEAAQAOAAIAAAAIAAEAAQAPAAIAAAAJAAEAAQAOAAIAAAAKAAEAAQAPAAIAAAALAAEAAQAOAAIAAAALAAAAAQAOAAEAAAAKAAAAAQAPAAEAAAAJAAAAAQAOAAEAAAAIAAAAAQAPAAEAAAAGAAAAAQAPAAEAAAAFAAAAAQAOAAEAAAAEAAAAAQAPAAEAAAADAAAAAQAOAAEAAAACAAAAAQAPAAEAAAABAAAAAQAPAAEAAAAAAAAAAQAOAAEAAAAAAAEAAQAOAAIAAAABAAEAAQAPAAIAAAACAAEAAQAPAAIAAAADAAEAAQAOAAIAAAACAAYAAQAPAAIAAAADAAYAAQAPAAIAAAAEAAYAAQAPAAIAAAA=")
@@ -5662,10 +5665,10 @@ tile_set = SubResource("TileSet_w08tk")
 position = Vector2(257, 57)
 
 [node name="Ethan" parent="." unique_id=1937102112 instance=ExtResource("983_ethan_play")]
-position = Vector2(167, 203)
+position = Vector2(168, 176)
 
 [node name="SpawnFromLobby" type="Marker2D" parent="." unique_id=1761168483]
-position = Vector2(167, 277)
+position = Vector2(168, 259)
 
 [node name="ExitToLobby2" type="Area2D" parent="." unique_id=1239546562]
 position = Vector2(167, 337)

@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://4vmh2iqsvepp" path="res://scenes/characters/julian.tscn" id="5_wln1w"]
 [ext_resource type="PackedScene" uid="uid://be6d30mx8c5ud" path="res://scenes/characters/luna.tscn" id="6_6kq1p"]
 [ext_resource type="PackedScene" uid="uid://dy24ed1x5c5a5" path="res://scenes/characters/marcus.tscn" id="7_x3y1g"]
+[ext_resource type="Texture2D" uid="uid://cadf15sduv3vf" path="res://assets/ui/Win.jpeg" id="8_5obf0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_suspect_blocker"]
 size = Vector2(39, 60.5)
@@ -39,6 +40,42 @@ corner_radius_bottom_left = 10
 shadow_color = Color(0.08, 0.2, 0.35, 0.22)
 shadow_size = 6
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_finish_btn_normal"]
+bg_color = Color(0.12, 0.04, 0.05, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.48, 0.48, 0.95)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_finish_btn_pressed"]
+bg_color = Color(0.09, 0.03, 0.04, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.36, 0.36, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_finish_btn_hover"]
+bg_color = Color(0.18, 0.06, 0.08, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.72, 0.72, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [node name="living" unique_id=602755512 instance=ExtResource("1_alfc2")]
 script = ExtResource("2_ocens")
 ethan_node_path = NodePath("Ethan")
@@ -47,10 +84,11 @@ disable_exit_area = true
 exit_area_path = NodePath("ExitToLobby")
 execution_action = &"execution"
 correct_culprit_key = "dominic"
-execution_input_unlock_delay_seconds = 5.0
+execution_input_unlock_delay_seconds = 10.0
 retry_scene_path = "res://scenes/main_menu/lobby_1.tscn"
 retry_spawn_marker = &"SpawnFromLiving"
 restart_scene_path = "res://scenes/cutscene/intro_start.tscn"
+main_menu_scene_path = "res://scenes/main_menu/lobby_1.tscn"
 
 [node name="Wall" parent="." index="2" unique_id=1958470466]
 tile_map_data = PackedByteArray("AAD//wYAAgAAAAIAAAD//wAAAgAAAAEAAAD//wEAAgAAAAIAAAD//wIAAgAAAAIAAAD//wMAAgAAAAIAAAD//wQAAgAAAAIAAAD//wUAAgAAAAIAAAD//wcAAgAAAAIAAAD//wgAAgAAAAIAAAD//wkAAgAAAAIAAAD//woAAgAAAAIAAAAYAAIAAgACAAIAAAAYAAMAAgACAAIAAAAYAAQAAgACAAIAAAAYAAUAAgACAAIAAAAYAAYAAgACAAIAAAAYAAcAAgACAAIAAAAYAAgAAgACAAIAAAAYAAkAAgACAAIAAAAYAAoAAgACAAIAAAAYAAAAAgACAAEAAAAYAAEAAgACAAIAAAD//wsAAgAAAAMAAAAAAAsAAgABAAMAAAABAAsAAgABAAMAAAACAAsAAgABAAMAAAADAAsAAgABAAMAAAAEAAsAAgABAAMAAAAFAAsAAgABAAMAAAAGAAsAAgABAAMAAAAHAAsAAgABAAMAAAAIAAsAAgABAAMAAAAJAAsAAgABAAMAAAAKAAsAAgABAAMAAAALAAsAAgABAAMAAAAMAAsAAgABAAMAAAANAAsAAgABAAMAAAAYAAsAAgACAAMAAAAXAAsAAgABAAMAAAAWAAsAAgABAAMAAAAVAAsAAgABAAMAAAAUAAsAAgABAAMAAAATAAsAAgABAAMAAAASAAsAAgAAAAEAAAAOAAsAAgACAAEAAAAOAAwAAgABAAMAAAANAAwAAgABAAMAAAAPAAwAAgABAAMAAAAQAAwAAgABAAMAAAARAAwAAgABAAMAAAASAAwAAgABAAMAAAATAAwAAgABAAMAAAA=")
@@ -71,7 +109,7 @@ position = Vector2(955, 369)
 position = Vector2(663, 367)
 
 [node name="CollisionShape2D" parent="ExitToLobby" parent_id_path=PackedInt32Array(980402) index="0" unique_id=980403]
-position = Vector2(8.5, 0)
+position = Vector2(8.5, 8.5)
 
 [node name="ExecutionCenter" type="Marker2D" parent="." index="15" unique_id=1473404096]
 position = Vector2(790, 430)
@@ -217,10 +255,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -260.0
-offset_top = -95.0
-offset_right = 260.0
-offset_bottom = 95.0
+offset_left = -390.0
+offset_top = -285.0
+offset_right = 390.0
+offset_bottom = 285.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_resultpanel")
 
 [node name="Margin" type="MarginContainer" parent="ExecutionUI/ResultPanel" index="0" unique_id=1843127802]
@@ -232,9 +270,25 @@ theme_override_constants/margin_bottom = 12
 
 [node name="VBox" type="VBoxContainer" parent="ExecutionUI/ResultPanel/Margin" index="0" unique_id=397306510]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 14
 
-[node name="ResultLabel" type="Label" parent="ExecutionUI/ResultPanel/Margin/VBox" index="0" unique_id=1128638073]
+[node name="WinImage" type="TextureRect" parent="ExecutionUI/ResultPanel/Margin/VBox" index="0" unique_id=1650091032]
+visible = false
+custom_minimum_size = Vector2(740, 360)
+layout_mode = 2
+texture = ExtResource("8_5obf0")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LoseLabel" type="Label" parent="ExecutionUI/ResultPanel/Margin/VBox" index="1" unique_id=206587301]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.14, 0.17, 1)
+theme_override_font_sizes/font_size = 42
+text = "YOU LOSE"
+horizontal_alignment = 1
+
+[node name="ResultLabel" type="Label" parent="ExecutionUI/ResultPanel/Margin/VBox" index="2" unique_id=1128638073]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.12, 0.16, 0.24, 1)
 theme_override_font_sizes/font_size = 22
@@ -242,7 +296,15 @@ text = "Result"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="HBox" type="HBoxContainer" parent="ExecutionUI/ResultPanel/Margin/VBox" index="1" unique_id=2135397872]
+[node name="WinTimeLabel" type="Label" parent="ExecutionUI/ResultPanel/Margin/VBox" index="3" unique_id=1259455712]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.12, 0.16, 0.24, 1)
+theme_override_font_sizes/font_size = 34
+text = "Time Spent: 00:00:00"
+horizontal_alignment = 1
+
+[node name="HBox" type="HBoxContainer" parent="ExecutionUI/ResultPanel/Margin/VBox" index="4" unique_id=2135397872]
 layout_mode = 2
 theme_override_constants/separation = 12
 alignment = 1
@@ -252,5 +314,11 @@ layout_mode = 2
 text = "Try Again"
 
 [node name="FinishButton" type="Button" parent="ExecutionUI/ResultPanel/Margin/VBox/HBox" index="1" unique_id=2128293409]
+custom_minimum_size = Vector2(360, 56)
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.94, 0.94, 1)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_finish_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_finish_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_finish_btn_hover")
 text = "Finish"

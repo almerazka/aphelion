@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://k6ah7d10sgxf"]
+[gd_scene format=4 uid="uid://bjlasuxxbm3yh"]
 
 [ext_resource type="Script" uid="uid://bfjvcdpmvu25q" path="res://scripts/world/scene_spawn.gd" id="1_xjk0h"]
 [ext_resource type="Texture2D" uid="uid://c2gdeq1ytwrs5" path="res://assets/area/Tileset/Floors_48x48.png" id="2_twbq2"]
@@ -164,6 +164,7 @@
 [ext_resource type="PackedScene" uid="uid://cl1uwio7bw5ft" path="res://scenes/characters/victoria.tscn" id="162_kgcrx"]
 [ext_resource type="PackedScene" uid="uid://cx1fsybn51ygk" path="res://scenes/characters/dominic.tscn" id="163_ndyiq"]
 [ext_resource type="PackedScene" uid="uid://dy24ed1x5c5a5" path="res://scenes/characters/marcus.tscn" id="164_kq7td"]
+[ext_resource type="PackedScene" uid="uid://boaqj11esxorf" path="res://scenes/ui/global_background.tscn" id="165_ndyiq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6y4ii"]
 texture = ExtResource("2_twbq2")
@@ -6393,8 +6394,10 @@ sources/146 = SubResource("TileSetAtlasSource_amvf6")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exit_lobby_party"]
 size = Vector2(283, 52)
 
-[node name="party" type="Node2D" unique_id=1654834358]
+[node name="intro" type="Node2D" unique_id=1654834358]
 script = ExtResource("1_xjk0h")
+
+[node name="GlobalBackground" parent="." unique_id=1064834065 instance=ExtResource("165_ndyiq")]
 
 [node name="Floor" type="TileMapLayer" parent="." unique_id=581758308]
 texture_filter = 3

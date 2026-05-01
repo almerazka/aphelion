@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://criroyflo3i0w" path="res://assets/area/Tileset/Tileset_48x48_7.png" id="1_fqmbk"]
 [ext_resource type="Texture2D" uid="uid://bnan2xo1iwts" path="res://assets/area/Tileset/Floors_2_TILESET_A2_.png" id="2_4gxq4"]
+[ext_resource type="PackedScene" uid="uid://boaqj11esxorf" path="res://scenes/ui/global_background.tscn" id="2_8efnp"]
 [ext_resource type="Texture2D" uid="uid://c2gdeq1ytwrs5" path="res://assets/area/Tileset/Floors_48x48.png" id="3_nrxuk"]
 [ext_resource type="Texture2D" uid="uid://bo7tc57vlvej6" path="res://assets/area/Room Builder/Room_Builder_3d_walls_48x48.png" id="4_gje5a"]
 [ext_resource type="Texture2D" uid="uid://bi1y1d6ie6cyi" path="res://assets/area/Tileset/Tileset_48x48_14.png" id="5_2co0d"]
@@ -7521,6 +7522,8 @@ size = Vector2(139, 20)
 
 [node name="lobby1" type="Node2D" unique_id=1174222973]
 script = ExtResource("221_u7b2a")
+
+[node name="GlobalBackground" parent="." unique_id=1064834065 instance=ExtResource("2_8efnp")]
 
 [node name="Floor" type="TileMapLayer" parent="." unique_id=1044788561]
 texture_filter = 3

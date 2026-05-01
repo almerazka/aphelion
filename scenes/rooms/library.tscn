@@ -100,6 +100,7 @@
 [ext_resource type="Texture2D" uid="uid://vxw0x18ki7tp" path="res://assets/area/Library/Classroom_and_Library_Singles_48x48_34.png" id="96_stx0l"]
 [ext_resource type="Texture2D" uid="uid://bh4i7n2kyf2d5" path="res://assets/area/Art/Art_Shadow_Singles_48x48_46.png" id="97_5kley"]
 [ext_resource type="PackedScene" uid="uid://dy24ed1x5c5a5" path="res://scenes/characters/marcus.tscn" id="101_8d76d"]
+[ext_resource type="PackedScene" uid="uid://boaqj11esxorf" path="res://scenes/ui/global_background.tscn" id="104_dmw75"]
 [ext_resource type="PackedScene" uid="uid://c3sy7ebd6dhxp" path="res://scenes/characters/ethan.tscn" id="982_ethan"]
 [ext_resource type="Script" uid="uid://goei7n31gjtu" path="res://scripts/world/door_trigger.gd" id="990_door_library"]
 [ext_resource type="Script" uid="uid://bfjvcdpmvu25q" path="res://scripts/world/scene_spawn.gd" id="991_spawn_library"]
@@ -8083,6 +8084,8 @@ size = Vector2(212, 80)
 [node name="library" type="Node2D" unique_id=781097332]
 script = ExtResource("991_spawn_library")
 
+[node name="GlobalBackground" parent="." unique_id=1064834065 instance=ExtResource("104_dmw75")]
+
 [node name="Floor" type="TileMapLayer" parent="." unique_id=120693198]
 texture_filter = 3
 tile_map_data = PackedByteArray("AAAAAAIAAgACAAkAAAABAAIAAgADAAkAAAACAAIAAgADAAkAAAADAAIAAgADAAkAAAAEAAIAAgADAAkAAAAFAAIAAgADAAkAAAAGAAIAAgADAAkAAAAHAAIAAgADAAkAAAAIAAIAAgADAAkAAAAJAAIAAgADAAkAAAAKAAIAAgACAAkAABAKAAMAAgACAAoAABAJAAMAAgADAAoAAAAIAAMAAgADAAoAAAAHAAMAAgADAAoAAAAGAAMAAgADAAoAAAAFAAMAAgADAAoAAAAEAAMAAgADAAoAAAADAAMAAgADAAoAAAACAAMAAgADAAoAAAABAAMAAgADAAoAAAAAAAMAAgACAAoAAAAAAAQAAgACAAoAAAABAAQAAgADAAoAAAACAAQAAgADAAoAAAADAAQAAgADAAoAAAAEAAQAAgADAAoAAAAFAAQAAgADAAoAAAAGAAQAAgADAAoAAAAHAAQAAgADAAoAAAAIAAQAAgADAAoAAAAJAAQAAgADAAoAAAAKAAQAAgADAAoAAAAGAAUAAgADAAkAACAFAAUAAgADAAkAACAEAAUAAgADAAkAACADAAUAAgADAAkAACACAAUAAgADAAkAACABAAUAAgADAAkAACAAAAUAAgACAAkAACAMAAIAAgACAAkAAAAMAAMAAgACAAoAAAANAAIAAgADAAkAAAANAAMAAgADAAoAAAAOAAIAAgADAAkAAAAOAAMAAgADAAoAAAAPAAIAAgADAAkAAAAPAAMAAgADAAoAAAAQAAIAAgADAAkAAAAQAAMAAgADAAoAAAARAAIAAgADAAkAAAARAAMAAgADAAoAAAASAAIAAgACAAkAABASAAMAAgACAAoAABARAAQAAgADAAoAAAARAAUAAgADAAkAACASAAQAAgACAAoAABASAAUAAgACAAkAADAPAAQAAgADAAoAAAAPAAUAAgADAAoAAAAQAAQAAgADAAoAAAAQAAUAAgADAAkAACANAAQAAgADAAoAAAANAAUAAgADAAkAACAOAAQAAgADAAoAAAAOAAUAAgADAAkAACALAAQAAgADAAoAAAAMAAQAAgADAAoAAAAMAAUAAgADAAkAACALAAMAAgADAAsAAAAOAAYAAgACAAoAADAPAAYAAgADAAoAAAAQAAYAAgACAAoAACAHAAUAAgADAAkAACAIAAUAAgADAAkAACAJAAUAAgADAAkAACAKAAUAAgADAAkAACALAAUAAgADAAkAACA=")
@@ -8114,10 +8117,10 @@ position = Vector2(130, 188)
 collision_mask = 2
 
 [node name="Ethan" parent="." unique_id=2123863911 instance=ExtResource("982_ethan")]
-position = Vector2(740, 252)
+position = Vector2(741, 161)
 
 [node name="SpawnFromLobby" type="Marker2D" parent="." unique_id=980301]
-position = Vector2(740, 252)
+position = Vector2(741, 245)
 
 [node name="ExitToLobby" type="Area2D" parent="." unique_id=980302]
 position = Vector2(741, 344)

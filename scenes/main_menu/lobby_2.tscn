@@ -47,6 +47,7 @@
 [ext_resource type="Texture2D" uid="uid://c56ojq0etgwn7" path="res://assets/area/Music and Sport/Music_and_Sport_Black_Shadow_Singles_48x48_109.png" id="116_l00b0"]
 [ext_resource type="Texture2D" uid="uid://b1qtnr7vq6qfy" path="res://assets/area/Taman and Museum/Museum_Black_Shadow_Singles_48x48_29.png" id="117_tnvg7"]
 [ext_resource type="Texture2D" uid="uid://di641wu3dxsfo" path="res://assets/area/Taman and Museum/Museum_Black_Shadow_Singles_48x48_36.png" id="118_gjr0s"]
+[ext_resource type="PackedScene" uid="uid://boaqj11esxorf" path="res://scenes/ui/global_background.tscn" id="120_rwhqs"]
 [ext_resource type="Texture2D" uid="uid://4i3f3pdwiwr4" path="res://assets/area/Lobby/Condominium_Black_Shadow_Singles_48x48_43.png" id="126_l0nts"]
 [ext_resource type="Texture2D" uid="uid://b0ko0qvm2n72y" path="res://assets/area/Lobby/Condominium_Black_Shadow_Singles_48x48_44.png" id="127_1gslt"]
 [ext_resource type="Texture2D" uid="uid://hdpv4ykqurqq" path="res://assets/area/Lobby/Condominium_Black_Shadow_Singles_48x48_45.png" id="128_x7uqu"]
@@ -7645,6 +7646,8 @@ size = Vector2(62, 36)
 
 [node name="lobby2" type="Node2D" unique_id=1174222973]
 script = ExtResource("991_spawn_lobby2")
+
+[node name="GlobalBackground" parent="." unique_id=1064834065 instance=ExtResource("120_rwhqs")]
 
 [node name="Floor" type="TileMapLayer" parent="." unique_id=1044788561]
 texture_filter = 3

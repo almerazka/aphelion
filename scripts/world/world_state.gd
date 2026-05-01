@@ -5,6 +5,8 @@ signal shadow_unlocked_changed(unlocked: bool)
 
 var shadow_unlocked: bool = false
 var is_shadow_world: bool = false
+var execution_prompt_seen: bool = false
+var last_win_elapsed_text: String = "00:00:00"
 
 var _canvas_modulate: CanvasModulate
 
@@ -62,5 +64,7 @@ func _set_world_mode(shadow_mode: bool) -> void:
 
 func reset_state() -> void:
 	shadow_unlocked = false
+	execution_prompt_seen = false
+	last_win_elapsed_text = "00:00:00"
 	emit_signal("shadow_unlocked_changed", shadow_unlocked)
 	_set_world_mode(false)

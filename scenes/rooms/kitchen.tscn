@@ -129,6 +129,7 @@
 [ext_resource type="Texture2D" uid="uid://c6aligkhjchd3" path="res://assets/area/Kitchen/Kitchen_Shadow_Singles_48x48_409.png" id="109_biy7k"]
 [ext_resource type="Texture2D" uid="uid://dtsyc7o21iu62" path="res://assets/area/Kitchen/Kitchen_Shadow_Singles_48x48_19.png" id="110_xa78k"]
 [ext_resource type="Texture2D" uid="uid://c0crfvv74u0qb" path="res://assets/area/Kitchen/Kitchen_Shadow_Singles_48x48_20.png" id="111_g7mia"]
+[ext_resource type="PackedScene" uid="uid://boaqj11esxorf" path="res://scenes/ui/global_background.tscn" id="133_q4h6r"]
 [ext_resource type="PackedScene" uid="uid://c3sy7ebd6dhxp" path="res://scenes/characters/ethan.tscn" id="980_ethan"]
 [ext_resource type="Script" uid="uid://goei7n31gjtu" path="res://scripts/world/door_trigger.gd" id="990_door"]
 [ext_resource type="Script" uid="uid://bfjvcdpmvu25q" path="res://scripts/world/scene_spawn.gd" id="991_spawn"]
@@ -6708,10 +6709,12 @@ sources/0 = SubResource("TileSetAtlasSource_f6n7h")
 sources/1 = SubResource("TileSetAtlasSource_q4h6r")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exit_lobby"]
-size = Vector2(99, 56)
+size = Vector2(187.5, 64)
 
 [node name="kitchen" type="Node2D" unique_id=1718343395]
 script = ExtResource("991_spawn")
+
+[node name="GlobalBackground" parent="." unique_id=1064834065 instance=ExtResource("133_q4h6r")]
 
 [node name="Floor" type="TileMapLayer" parent="." unique_id=1393392728]
 texture_filter = 3
@@ -6749,10 +6752,10 @@ tile_map_data = PackedByteArray("AAAXAA8ALwAAAAAAAAAXABAALwAAAAEAAAAXABEALwAAAAI
 tile_set = SubResource("TileSet_u2gpd")
 
 [node name="Ethan" parent="." unique_id=2123863911 instance=ExtResource("980_ethan")]
-position = Vector2(765, 316)
+position = Vector2(743, 259)
 
 [node name="SpawnFromLobby" type="Marker2D" parent="." unique_id=980101]
-position = Vector2(744, 312)
+position = Vector2(743, 342)
 
 [node name="ExitToLobby" type="Area2D" parent="." unique_id=980102]
 position = Vector2(743, 393)
@@ -6761,5 +6764,5 @@ target_scene = "res://scenes/main_menu/lobby_1.tscn"
 target_spawn_marker = &"SpawnFromKitchen"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitToLobby" unique_id=980103]
-position = Vector2(2, 6)
+position = Vector2(5.25, 11)
 shape = SubResource("RectangleShape2D_exit_lobby")

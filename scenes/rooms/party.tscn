@@ -159,6 +159,7 @@
 [ext_resource type="Texture2D" uid="uid://c6aligkhjchd3" path="res://assets/area/Kitchen/Kitchen_Shadow_Singles_48x48_409.png" id="157_g4jd7"]
 [ext_resource type="Texture2D" uid="uid://dtsyc7o21iu62" path="res://assets/area/Kitchen/Kitchen_Shadow_Singles_48x48_19.png" id="158_t6rnw"]
 [ext_resource type="Texture2D" uid="uid://c0crfvv74u0qb" path="res://assets/area/Kitchen/Kitchen_Shadow_Singles_48x48_20.png" id="159_8n1fm"]
+[ext_resource type="PackedScene" uid="uid://boaqj11esxorf" path="res://scenes/ui/global_background.tscn" id="163_bffxd"]
 [ext_resource type="PackedScene" uid="uid://c3sy7ebd6dhxp" path="res://scenes/characters/ethan.tscn" id="981_ethan"]
 [ext_resource type="Script" uid="uid://goei7n31gjtu" path="res://scripts/world/door_trigger.gd" id="990_door_party"]
 [ext_resource type="Script" uid="uid://bfjvcdpmvu25q" path="res://scripts/world/scene_spawn.gd" id="991_spawn_party"]
@@ -6394,6 +6395,8 @@ size = Vector2(358, 93)
 [node name="party" type="Node2D" unique_id=1654834358]
 script = ExtResource("991_spawn_party")
 
+[node name="GlobalBackground" parent="." unique_id=1064834065 instance=ExtResource("163_bffxd")]
+
 [node name="Floor" type="TileMapLayer" parent="." unique_id=581758308]
 texture_filter = 3
 tile_map_data = PackedByteArray("AAABAAIAAgALAAEAAAACAAIAAgALAAEAAAADAAIAAgALAAEAAAAEAAIAAgALAAEAAAAFAAIAAgALAAEAAAAGAAIAAgALAAEAAAAHAAIAAgALAAEAAAAIAAIAAgALAAEAAAAJAAIAAgALAAEAAAAKAAIAAgALAAEAAAAKAAMAAgALAAEAAAAJAAMAAgALAAEAAAAIAAMAAgALAAEAAAAHAAMAAgALAAEAAAAGAAMAAgALAAEAAAAFAAMAAgALAAEAAAAEAAMAAgALAAEAAAADAAMAAgALAAEAAAACAAMAAgALAAEAAAABAAMAAgALAAEAAAABAAQAAgALAAEAAAACAAQAAgALAAEAAAADAAQAAgALAAEAAAAEAAQAAgALAAEAAAAFAAQAAgALAAEAAAAGAAQAAgALAAEAAAAHAAQAAgALAAEAAAAIAAQAAgALAAEAAAAJAAQAAgALAAEAAAAKAAQAAgALAAEAAAAKAAUAAgALAAEAAAAJAAUAAgALAAEAAAAIAAUAAgALAAEAAAAHAAUAAgALAAEAAAAGAAUAAgALAAEAAAAFAAUAAgALAAEAAAAEAAUAAgALAAEAAAADAAUAAgALAAEAAAACAAUAAgALAAEAAAABAAUAAgALAAEAAAABAAYAAgALAAEAAAACAAYAAgALAAEAAAADAAYAAgALAAEAAAAEAAYAAgALAAEAAAAFAAYAAgALAAEAAAAGAAYAAgALAAEAAAAHAAYAAgALAAEAAAAIAAYAAgALAAEAAAAJAAYAAgALAAEAAAAKAAYAAgALAAEAAAAKAAcAAgALAAEAAAAJAAcAAgALAAEAAAAIAAcAAgALAAEAAAAHAAcAAgALAAEAAAAGAAcAAgALAAEAAAAFAAcAAgALAAEAAAAEAAcAAgALAAEAAAADAAcAAgALAAEAAAACAAcAAgALAAEAAAABAAcAAgALAAEAAAADAAgAAgALAAEAAAAEAAgAAgALAAEAAAAFAAgAAgALAAEAAAAGAAgAAgALAAEAAAAHAAgAAgALAAEAAAAIAAgAAgALAAEAAAAIAAkAAgALAAEAAAAHAAkAAgALAAEAAAAGAAkAAgALAAEAAAAFAAkAAgALAAEAAAAEAAkAAgALAAEAAAADAAkAAgALAAEAAAA=")
@@ -6420,10 +6423,10 @@ tile_map_data = PackedByteArray("AAALABMAkAAAAAAAAAALABQAkAAAAAEAAAALABUAkAAAAAE
 tile_set = SubResource("TileSet_1bcom")
 
 [node name="Ethan" parent="." unique_id=2123863911 instance=ExtResource("981_ethan")]
-position = Vector2(286, 398)
+position = Vector2(286, 325)
 
 [node name="SpawnFromLobby" type="Marker2D" parent="." unique_id=980201]
-position = Vector2(286, 398)
+position = Vector2(287, 414)
 
 [node name="ExitToLobby" type="Area2D" parent="." unique_id=980202]
 position = Vector2(287, 484)

@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://cim8tuasrr3s1"]
 
 [ext_resource type="Script" uid="uid://bfjvcdpmvu25q" path="res://scripts/world/scene_spawn.gd" id="1_xjk0h"]
+[ext_resource type="PackedScene" uid="uid://boaqj11esxorf" path="res://scenes/ui/global_background.tscn" id="2_jgb32"]
 [ext_resource type="Texture2D" uid="uid://c2gdeq1ytwrs5" path="res://assets/area/Tileset/Floors_48x48.png" id="2_twbq2"]
 [ext_resource type="Texture2D" uid="uid://bo7tc57vlvej6" path="res://assets/area/Room Builder/Room_Builder_3d_walls_48x48.png" id="3_kgcrx"]
 [ext_resource type="Texture2D" uid="uid://c03gpn6yoqf3" path="res://assets/area/Birthday/Birthday_Party_Shadow_Singles_48x48_21.png" id="4_ndyiq"]
@@ -6393,8 +6394,10 @@ sources/146 = SubResource("TileSetAtlasSource_amvf6")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exit_lobby_party"]
 size = Vector2(283, 52)
 
-[node name="party" type="Node2D" unique_id=1654834358]
+[node name="intro" type="Node2D" unique_id=1654834358]
 script = ExtResource("1_xjk0h")
+
+[node name="GlobalBackground" parent="." unique_id=1064834065 instance=ExtResource("2_jgb32")]
 
 [node name="Floor" type="TileMapLayer" parent="." unique_id=581758308]
 texture_filter = 3

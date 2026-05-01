@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bfjvcdpmvu25q" path="res://scripts/world/scene_spawn.gd" id="1_y042r"]
 [ext_resource type="Texture2D" uid="uid://criroyflo3i0w" path="res://assets/area/Tileset/Tileset_48x48_7.png" id="2_4xgnk"]
+[ext_resource type="PackedScene" uid="uid://boaqj11esxorf" path="res://scenes/ui/global_background.tscn" id="2_bf7wf"]
 [ext_resource type="Texture2D" uid="uid://c2gdeq1ytwrs5" path="res://assets/area/Tileset/Floors_48x48.png" id="3_eun4u"]
 [ext_resource type="Texture2D" uid="uid://bo7tc57vlvej6" path="res://assets/area/Room Builder/Room_Builder_3d_walls_48x48.png" id="4_uhpkv"]
 [ext_resource type="Texture2D" uid="uid://bi1y1d6ie6cyi" path="res://assets/area/Tileset/Tileset_48x48_14.png" id="5_0fqn6"]
@@ -6711,9 +6712,11 @@ sources/1 = SubResource("TileSetAtlasSource_bf7wf")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exit_lobby"]
 size = Vector2(99, 56)
 
-[node name="kitchen" type="Node2D" unique_id=1718343395]
+[node name="crime_scene" type="Node2D" unique_id=1718343395]
 position = Vector2(19, -1)
 script = ExtResource("1_y042r")
+
+[node name="GlobalBackground" parent="." unique_id=1064834065 instance=ExtResource("2_bf7wf")]
 
 [node name="Floor" type="TileMapLayer" parent="." unique_id=1393392728]
 texture_filter = 3

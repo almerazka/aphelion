@@ -6,10 +6,13 @@ extends Node2D
 @export var exit_area_path: NodePath = ^"ExitToLobby"
 @export var execution_action: StringName = &"execution"
 @export var correct_culprit_key: String = "dominic"
-@export var execution_input_unlock_delay_seconds: float = 5.0
+@export var execution_input_unlock_delay_seconds: float = 10.0
 @export_file("*.tscn") var retry_scene_path: String = "res://scenes/main_menu/lobby_1.tscn"
 @export var retry_spawn_marker: StringName = &"SpawnFromLiving"
 @export_file("*.tscn") var restart_scene_path: String = "res://scenes/cutscene/intro_start.tscn"
+@export_file("*.tscn") var main_menu_scene_path: String = "res://scenes/main_menu/lobby_1.tscn"
+@export_file("*.tscn") var lose_scene_path: String = "res://scenes/main_menu/lose_screen.tscn"
+@export_file("*.tscn") var win_scene_path: String = "res://scenes/main_menu/win_screen.tscn"
 
 const NPC_RING_ORDER: Array[String] = ["Dominic", "Victoria", "Julian", "Luna", "Marcus"]
 const SUSPECTS: Array[Dictionary] = [
@@ -17,7 +20,7 @@ const SUSPECTS: Array[Dictionary] = [
 	{"key":"victoria", "label":"Victoria Hayes"},
 	{"key":"julian", "label":"Julian Park"},
 	{"key":"luna", "label":"Luna Hart"},
-	{"key":"marcus", "label":"Marcus Hale"},
+	{"key":"marcus", "label":"Marcus Cole"},
 ]
 const SUSPECT_SCENES := {
 	"dominic": "res://scenes/characters/dominic.tscn",
@@ -40,7 +43,10 @@ const SUSPECT_SCENES := {
 @onready var confirm_yes_button: Button = $ExecutionUI/ConfirmPanel/Margin/VBox/HBox/YesButton
 @onready var confirm_no_button: Button = $ExecutionUI/ConfirmPanel/Margin/VBox/HBox/NoButton
 @onready var result_panel: PanelContainer = $ExecutionUI/ResultPanel
+@onready var win_image: TextureRect = $ExecutionUI/ResultPanel/Margin/VBox/WinImage
+@onready var lose_label: Label = $ExecutionUI/ResultPanel/Margin/VBox/LoseLabel
 @onready var result_label: Label = $ExecutionUI/ResultPanel/Margin/VBox/ResultLabel
+@onready var win_time_label: Label = $ExecutionUI/ResultPanel/Margin/VBox/WinTimeLabel
 @onready var try_again_button: Button = $ExecutionUI/ResultPanel/Margin/VBox/HBox/TryAgainButton
 @onready var finish_button: Button = $ExecutionUI/ResultPanel/Margin/VBox/HBox/FinishButton
 
@@ -177,6 +183,9 @@ func _setup_ui() -> void:
 	finish_button.visible = false
 	try_again_button.visible = true
 	try_again_button.text = "Try Again"
+	win_image.visible = false
+	lose_label.visible = false
+	win_time_label.visible = false
 	_set_ethan_can_walk(true)
 	_refresh_suspect_preview(0)
 
@@ -218,18 +227,35 @@ func _on_confirm_yes_pressed() -> void:
 
 	if _pending_suspect_key == correct_culprit_key.to_lower():
 		_case_resolved = true
-		result_label.text = "You are correct.\nCase closed."
-		try_again_button.visible = false
-		finish_button.visible = true
+		var elapsed_text: String = "00:00:00"
+		if has_node("/root/PlayGuide"):
+			elapsed_text = PlayGuide.get_formatted_elapsed()
+		if has_node("/root/WorldState"):
+			WorldState.last_win_elapsed_text = elapsed_text
 		_set_ethan_can_walk(false)
+		if has_node("/root/SceneTransition"):
+			SceneTransition.change_scene(win_scene_path)
+		else:
+			get_tree().change_scene_to_file(win_scene_path)
+		return
 	else:
+		win_image.visible = false
+		win_time_label.visible = false
+		result_label.visible = true
 		var is_final_judgment := has_node("/root/WorldState") and has_node("/root/ClueInventory") and WorldState.shadow_unlocked and ClueInventory.has_shadow_dominic_clue()
 		if is_final_judgment:
-			_bad_ending_pending_restart = true
-			result_label.text = "You are wrong.\nBad ending."
-			try_again_button.text = "Restart"
+			if has_node("/root/ClueInventory"):
+				ClueInventory.reset_progress()
+			if has_node("/root/WorldState"):
+				WorldState.reset_state()
+			if has_node("/root/SceneTransition"):
+				SceneTransition.change_scene(lose_scene_path)
+			else:
+				get_tree().change_scene_to_file(lose_scene_path)
+			return
 		else:
 			_bad_ending_pending_restart = false
+			lose_label.visible = false
 			result_label.text = "You are wrong.\nTry again."
 			try_again_button.text = "Try Again"
 		try_again_button.visible = true
@@ -259,9 +285,9 @@ func _on_try_again_pressed() -> void:
 		if has_node("/root/WorldState"):
 			WorldState.reset_state()
 		if has_node("/root/SceneTransition"):
-			SceneTransition.change_scene(restart_scene_path)
+			SceneTransition.change_scene(main_menu_scene_path)
 		else:
-			get_tree().change_scene_to_file(restart_scene_path)
+			get_tree().change_scene_to_file(main_menu_scene_path)
 		return
 	if has_node("/root/WorldState"):
 		WorldState.unlock_shadow_world(false)
@@ -274,7 +300,10 @@ func _on_try_again_pressed() -> void:
 
 
 func _on_finish_pressed() -> void:
-	get_tree().quit()
+	if has_node("/root/SceneTransition"):
+		SceneTransition.change_scene(main_menu_scene_path)
+	else:
+		get_tree().change_scene_to_file(main_menu_scene_path)
 
 
 func _set_ethan_can_walk(value: bool) -> void:
@@ -289,6 +318,11 @@ func _set_ethan_can_walk(value: bool) -> void:
 
 func _start_execution_input_unlock_delay() -> void:
 	_execution_input_unlocked = false
+	if has_node("/root/WorldState") and WorldState.execution_prompt_seen:
+		_execution_input_unlocked = true
+		return
+	if has_node("/root/WorldState"):
+		WorldState.execution_prompt_seen = true
 	if execution_input_unlock_delay_seconds <= 0.0:
 		_execution_input_unlocked = true
 		return

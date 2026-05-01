@@ -2,12 +2,14 @@ extends CanvasLayer
 
 @export var intro_duration_seconds: float = 8.0
 @export var lobby_intro_duration_seconds: float = 8.0
-@export var execution_prompt_duration_seconds: float = 5.0
-@export var shadow_prompt_duration_seconds: float = 14.0
+@export var execution_prompt_duration_seconds: float = 10.0
+@export var shadow_prompt_duration_seconds: float = 10.0
 
 @onready var panel: PanelContainer = $CenterGuidePanel
 @onready var label: RichTextLabel = $CenterGuidePanel/Margin/GuideText
 @onready var timer: Timer = $DisplayTimer
+@onready var play_time_panel: PanelContainer = $PlayTimePanel
+@onready var play_time_label: Label = $PlayTimePanel/Margin/PlayTimeLabel
 
 var _showing_execution_prompt: bool = false
 var _shadow_hint_shown_once: bool = false
@@ -15,9 +17,13 @@ var _lobby_intro_shown_once: bool = false
 var _intro_guide_shown_once: bool = false
 var _execution_room_hint_shown_once: bool = false
 var _default_panel_offsets: Vector4 = Vector4.ZERO
+var _timer_started: bool = false
+var _elapsed_seconds: float = 0.0
 
 func _ready() -> void:
 	_default_panel_offsets = Vector4(panel.offset_left, panel.offset_top, panel.offset_right, panel.offset_bottom)
+	play_time_panel.visible = false
+	play_time_label.visible = false
 	if not timer.timeout.is_connected(_on_display_timer_timeout):
 		timer.timeout.connect(_on_display_timer_timeout)
 	var tree := get_tree()
@@ -34,6 +40,9 @@ func _ready() -> void:
 		if not WorldState.shadow_unlocked_changed.is_connected(_on_shadow_unlock_changed):
 			WorldState.shadow_unlocked_changed.connect(_on_shadow_unlock_changed)
 	_maybe_show_intro_guide_once()
+	set_process(true)
+	_update_play_time_label()
+	_refresh()
 
 
 func _notification(what: int) -> void:
@@ -50,12 +59,10 @@ func _on_shadow_unlock_changed(_unlocked: bool) -> void:
 
 
 func _on_current_scene_changed(_scene: Node) -> void:
-	_shadow_hint_shown_once = false
 	_deferred_scene_refresh()
 
 
 func _on_scene_changed() -> void:
-	_shadow_hint_shown_once = false
 	_deferred_scene_refresh()
 
 
@@ -70,9 +77,17 @@ func _refresh_after_scene_ready() -> void:
 
 
 func _refresh() -> void:
+	if _is_cutscene_scene():
+		panel.visible = false
+		play_time_panel.visible = false
+		return
 	if not _is_gameplay_scene():
 		panel.visible = false
+		play_time_panel.visible = false
+		play_time_label.visible = false
 		return
+	play_time_panel.visible = not _is_main_menu_scene()
+	play_time_label.visible = play_time_panel.visible
 	if not has_node("/root/ClueInventory"):
 		return
 
@@ -90,6 +105,9 @@ func _refresh() -> void:
 
 
 func _maybe_show_intro_guide_once() -> void:
+	if _is_cutscene_scene():
+		panel.visible = false
+		return
 	if not _is_gameplay_scene():
 		panel.visible = false
 		return
@@ -159,11 +177,41 @@ func _is_execution_scene() -> bool:
 	return current_scene.scene_file_path == "res://scenes/rooms/execution.tscn"
 
 
+func _is_cutscene_scene() -> bool:
+	var current_scene := get_tree().current_scene
+	if current_scene == null:
+		return false
+	return String(current_scene.scene_file_path).begins_with("res://scenes/cutscene/")
+
+
+func _is_main_menu_scene() -> bool:
+	var current_scene := get_tree().current_scene
+	if current_scene == null:
+		return false
+	return String(current_scene.scene_file_path) == "res://scenes/main_menu/main_menu.tscn"
+
+
 func _on_display_timer_timeout() -> void:
 	if _showing_execution_prompt:
 		return
 	panel.visible = false
 	_restore_default_panel_size()
+
+
+func _process(delta: float) -> void:
+	if _is_gameplay_scene():
+		_timer_started = true
+	if _timer_started:
+		_elapsed_seconds += delta
+	_update_play_time_label()
+
+
+func get_elapsed_seconds() -> float:
+	return _elapsed_seconds
+
+
+func get_formatted_elapsed() -> String:
+	return _format_seconds(_elapsed_seconds)
 
 
 func _set_compact_execution_panel() -> void:
@@ -180,3 +228,17 @@ func _restore_default_panel_size() -> void:
 	panel.offset_top = _default_panel_offsets.y
 	panel.offset_right = _default_panel_offsets.z
 	panel.offset_bottom = _default_panel_offsets.w
+
+
+func _update_play_time_label() -> void:
+	if play_time_label == null:
+		return
+	play_time_label.text = "Time %s" % _format_seconds(_elapsed_seconds)
+
+
+func _format_seconds(total_seconds: float) -> String:
+	var value := int(total_seconds)
+	var hours := value / 3600
+	var minutes := (value % 3600) / 60
+	var seconds := value % 60
+	return "%02d:%02d:%02d" % [hours, minutes, seconds]
