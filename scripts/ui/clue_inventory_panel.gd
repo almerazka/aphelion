@@ -52,15 +52,15 @@ func _update_content() -> void:
 
 	var sections: Array[Dictionary] = ClueInventory.get_unlocked_sections()
 	if sections.is_empty():
-		content_label.text = "Belum ada clue.\n\nNgobrol dulu dengan NPC (tombol Space) untuk buka clue."
+		content_label.text = "[font_size=20][i]Belum ada clue.[/i]\n\nNgobrol dulu dengan NPC (tombol Space) untuk buka clue.[/font_size]"
 		return
 
 	var lines: Array[String] = []
 	for section in sections:
-		lines.append("[b]%s[/b]" % String(section.get("name", "UNKNOWN")))
+		lines.append("[color=#f0d7a1][b]%s[/b][/color]" % String(section.get("name", "UNKNOWN")))
 		var clues: Array = section.get("clues", [])
 		for clue in clues:
-			lines.append("- %s" % String(clue))
+			lines.append("[color=#e6e9ee]- %s[/color]" % String(clue))
 		lines.append("")
 
 	content_label.text = "\n".join(lines)

@@ -10,6 +10,8 @@ var _last_dir: Vector2 = Vector2.DOWN
 var _dialog_active: bool = false
 var _active_dialog_npc_key: String = ""
 const DIALOG_NAME_COLOR := Color(1, 1, 1, 1)
+const DIALOG_PANEL_BG := Color(0.02, 0.02, 0.03, 0.92)
+const DIALOG_PANEL_BORDER := Color(0.71, 0.63, 0.45, 0.78)
 
 const INTERACTABLE_DIALOG_KEYS: Dictionary = {
 	"dominic": "dominic",
@@ -88,6 +90,7 @@ func _try_talk_to_nearest_npc() -> void:
 
 	Dialogic.start(timeline)
 	_apply_dialog_name_style()
+	_apply_dialog_panel_style()
 
 
 func _on_dialogue_ended() -> void:
@@ -104,6 +107,7 @@ func _on_dialogue_ended() -> void:
 
 func _on_dialogic_speaker_updated(_character: DialogicCharacter) -> void:
 	_apply_dialog_name_style()
+	_apply_dialog_panel_style()
 
 
 func _apply_dialog_name_style() -> void:
@@ -112,6 +116,71 @@ func _apply_dialog_name_style() -> void:
 			name_label.use_character_color = false
 		if name_label is CanvasItem:
 			(name_label as CanvasItem).self_modulate = DIALOG_NAME_COLOR
+
+
+func _apply_dialog_panel_style() -> void:
+	for dialog_text in get_tree().get_nodes_in_group("dialogic_dialog_text"):
+		if not (dialog_text is Control):
+			continue
+		var dialog_panel := _find_parent_panel(dialog_text as Control)
+		if dialog_panel != null:
+			dialog_panel.self_modulate = Color(1, 1, 1, 1)
+			dialog_panel.add_theme_stylebox_override("panel", _build_dialog_stylebox())
+
+	for name_label in get_tree().get_nodes_in_group("dialogic_name_label"):
+		if not (name_label is Control):
+			continue
+		var name_panel := _find_parent_panel(name_label as Control)
+		if name_panel != null:
+			name_panel.self_modulate = Color(1, 1, 1, 1)
+			name_panel.add_theme_stylebox_override("panel", _build_name_stylebox())
+
+
+func _find_parent_panel(node: Node) -> PanelContainer:
+	var current := node.get_parent()
+	while current != null:
+		if current is PanelContainer:
+			return current as PanelContainer
+		current = current.get_parent()
+	return null
+
+
+func _build_dialog_stylebox() -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = DIALOG_PANEL_BG
+	style.border_color = DIALOG_PANEL_BORDER
+	style.border_width_left = 2
+	style.border_width_top = 2
+	style.border_width_right = 2
+	style.border_width_bottom = 2
+	style.corner_radius_top_left = 10
+	style.corner_radius_top_right = 10
+	style.corner_radius_bottom_right = 10
+	style.corner_radius_bottom_left = 10
+	style.shadow_color = Color(0, 0, 0, 0.5)
+	style.shadow_size = 7
+	style.content_margin_left = 14
+	style.content_margin_top = 11
+	style.content_margin_right = 14
+	style.content_margin_bottom = 11
+	return style
+
+
+func _build_name_stylebox() -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.06, 0.06, 0.08, 0.97)
+	style.border_color = DIALOG_PANEL_BORDER
+	style.border_width_left = 2
+	style.border_width_top = 2
+	style.border_width_right = 2
+	style.border_width_bottom = 2
+	style.corner_radius_top_left = 8
+	style.corner_radius_top_right = 8
+	style.corner_radius_bottom_right = 8
+	style.corner_radius_bottom_left = 8
+	style.content_margin_left = 10
+	style.content_margin_right = 10
+	return style
 
 func _play_walk(dir: Vector2) -> void:
 	if absf(dir.x) > absf(dir.y):

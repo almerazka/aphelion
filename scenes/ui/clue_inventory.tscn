@@ -2,6 +2,20 @@
 
 [ext_resource type="Script" path="res://scripts/ui/clue_inventory_panel.gd" id="1_hfclu"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inventory_panel"]
+bg_color = Color(0.04, 0.03, 0.02, 0.94)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.69, 0.6, 0.4, 0.92)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.65)
+shadow_size = 14
+
 [node name="ClueInventoryUI" type="CanvasLayer"]
 layer = 10
 script = ExtResource("1_hfclu")
@@ -12,29 +26,47 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -340.0
-offset_top = -210.0
-offset_right = 340.0
-offset_bottom = 210.0
+offset_left = -420.0
+offset_top = -250.0
+offset_right = 420.0
+offset_bottom = 250.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_inventory_panel")
 
 [node name="Margin" type="MarginContainer" parent="BookPanel"]
-theme_override_constants/margin_left = 18
-theme_override_constants/margin_top = 14
-theme_override_constants/margin_right = 18
-theme_override_constants/margin_bottom = 14
+theme_override_constants/margin_left = 26
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 26
+theme_override_constants/margin_bottom = 18
 
 [node name="VBox" type="VBoxContainer" parent="BookPanel/Margin"]
+theme_override_constants/separation = 8
 
 [node name="Title" type="Label" parent="BookPanel/Margin/VBox"]
 text = "DETECTIVE NOTEBOOK"
 horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.96, 0.91, 0.75, 1)
+theme_override_font_sizes/font_size = 42
 
 [node name="Hint" type="Label" parent="BookPanel/Margin/VBox"]
 text = "Tekan C untuk tutup"
-modulate = Color(0.72, 0.72, 0.72, 1)
+modulate = Color(0.78, 0.8, 0.84, 1)
+theme_override_font_sizes/font_size = 24
+
+[node name="CaseTag" type="Label" parent="BookPanel/Margin/VBox"]
+text = "CASE NOTES"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.81, 0.74, 0.57, 1)
+theme_override_font_sizes/font_size = 20
+
+[node name="Divider" type="HSeparator" parent="BookPanel/Margin/VBox"]
+modulate = Color(0.74, 0.64, 0.44, 0.7)
 
 [node name="Content" type="RichTextLabel" parent="BookPanel/Margin/VBox"]
 bbcode_enabled = true
 scroll_active = true
 size_flags_vertical = 3
 fit_content = false
+theme_override_colors/default_color = Color(0.95, 0.95, 0.92, 1)
+theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/bold_font_size = 44
+theme_override_constants/line_separation = 10
