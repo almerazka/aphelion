@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cl1uwio7bw5ft"]
+
+[ext_resource type="Texture2D" uid="uid://geglm00a2iel" path="res://assets/characters/Victoria/victoria.png" id="1_nesy8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tm5ci"]
+atlas = ExtResource("1_nesy8")
+region = Rect2(0, 596, 300, 298)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rirnp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tm5ci")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kdobh"]
+size = Vector2(38, 86)
+
+[node name="Victoria" type="CharacterBody2D" unique_id=1204560078]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1890252997]
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_rirnp")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=839807271]
+position = Vector2(-1, 2)
+shape = SubResource("RectangleShape2D_kdobh")

@@ -137,6 +137,7 @@
 [ext_resource type="Texture2D" uid="uid://8vgltpkwnap4" path="res://assets/area/Bedroom/Bedroom_Black_Shadow_Singles_48x48_243.png" id="135_h3ti6"]
 [ext_resource type="Texture2D" uid="uid://b0mgv8g3celiu" path="res://assets/area/Music and Sport/Music_and_Sport_Black_Shadow_Singles_48x48_35.png" id="136_4sn78"]
 [ext_resource type="Texture2D" uid="uid://dyov6ktsichcj" path="res://assets/area/Music and Sport/Music_and_Sport_Black_Shadow_Singles_48x48_37.png" id="137_qw8rk"]
+[ext_resource type="PackedScene" uid="uid://cl1uwio7bw5ft" path="res://scenes/characters/victoria.tscn" id="141_yyg1d"]
 [ext_resource type="PackedScene" uid="uid://c3sy7ebd6dhxp" path="res://scenes/characters/ethan.tscn" id="983_ethan_bedroom1"]
 [ext_resource type="Script" uid="uid://goei7n31gjtu" path="res://scripts/world/door_trigger.gd" id="990_door_bedroom1"]
 [ext_resource type="Script" uid="uid://bfjvcdpmvu25q" path="res://scripts/world/scene_spawn.gd" id="991_spawn_bedroom1"]
@@ -7118,6 +7119,9 @@ tile_set = SubResource("TileSet_xxv8c")
 
 [node name="Ethan" parent="." unique_id=2123863911 instance=ExtResource("983_ethan_bedroom1")]
 position = Vector2(191, 231)
+
+[node name="Victoria" parent="." unique_id=1204560078 instance=ExtResource("141_yyg1d")]
+position = Vector2(159, 131)
 
 [node name="SpawnFromLobby" type="Marker2D" parent="." unique_id=980611]
 position = Vector2(193, 310)

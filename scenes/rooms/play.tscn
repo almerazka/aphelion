@@ -58,6 +58,7 @@
 [ext_resource type="Texture2D" uid="uid://cdgiir7n7lyv5" path="res://assets/area/ETC/Fishing_Shadow_Singles_48x48_52.png" id="51_1byxe"]
 [ext_resource type="Texture2D" uid="uid://dfjt22dehv0g8" path="res://assets/area/ETC/Japanese_Interiors_Black_Shadow_Singles_48x48_58.png" id="52_wasie"]
 [ext_resource type="Texture2D" uid="uid://by8f42c25e56d" path="res://assets/area/Room Builder/B-C-D-E_Basement_01.png" id="53_1byxe"]
+[ext_resource type="PackedScene" uid="uid://cx1fsybn51ygk" path="res://scenes/characters/dominic.tscn" id="62_webwn"]
 [ext_resource type="PackedScene" uid="uid://c3sy7ebd6dhxp" path="res://scenes/characters/ethan.tscn" id="983_ethan_play"]
 [ext_resource type="Script" uid="uid://goei7n31gjtu" path="res://scripts/world/door_trigger.gd" id="990_door_play"]
 [ext_resource type="Script" uid="uid://bfjvcdpmvu25q" path="res://scripts/world/scene_spawn.gd" id="991_spawn_play"]
@@ -5672,3 +5673,6 @@ target_spawn_marker = &"SpawnFromPlayroom"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitToLobby2" unique_id=1194909990]
 position = Vector2(1.5, -1.5)
 shape = SubResource("RectangleShape2D_exit_lobby2_play")
+
+[node name="Dominic" parent="." unique_id=1204560078 instance=ExtResource("62_webwn")]
+position = Vector2(257, 57)

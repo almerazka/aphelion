@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://dy24ed1x5c5a5"]
+
+[ext_resource type="Texture2D" uid="uid://b358ldhd6ymu0" path="res://assets/characters/Marcus/marcus.png" id="1_dpu2d"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dpu2d"]
+atlas = ExtResource("1_dpu2d")
+region = Rect2(0, 0, 1200, 1192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u87iq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dpu2d")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kdobh"]
+size = Vector2(38, 86)
+
+[node name="Marcus" type="CharacterBody2D" unique_id=1204560078]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1890252997]
+scale = Vector2(0.09, 0.09)
+sprite_frames = SubResource("SpriteFrames_u87iq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=839807271]
+position = Vector2(-1, 2)
+shape = SubResource("RectangleShape2D_kdobh")

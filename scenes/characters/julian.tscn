@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://4vmh2iqsvepp"]
+
+[ext_resource type="Texture2D" uid="uid://jyht4ldkieka" path="res://assets/characters/Julian/dr.png" id="1_hf7yd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hf7yd"]
+atlas = ExtResource("1_hf7yd")
+region = Rect2(0, 298, 300, 298)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d22mb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hf7yd")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kdobh"]
+size = Vector2(40, 82)
+
+[node name="Julian" type="CharacterBody2D" unique_id=1204560078]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1540439078]
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_d22mb")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=839807271]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_kdobh")

@@ -128,6 +128,7 @@
 [ext_resource type="Texture2D" uid="uid://c6aligkhjchd3" path="res://assets/area/Kitchen/Kitchen_Shadow_Singles_48x48_409.png" id="109_biy7k"]
 [ext_resource type="Texture2D" uid="uid://dtsyc7o21iu62" path="res://assets/area/Kitchen/Kitchen_Shadow_Singles_48x48_19.png" id="110_xa78k"]
 [ext_resource type="Texture2D" uid="uid://c0crfvv74u0qb" path="res://assets/area/Kitchen/Kitchen_Shadow_Singles_48x48_20.png" id="111_g7mia"]
+[ext_resource type="PackedScene" uid="uid://dy24ed1x5c5a5" path="res://scenes/characters/marcus.tscn" id="132_yms18"]
 [ext_resource type="PackedScene" uid="uid://c3sy7ebd6dhxp" path="res://scenes/characters/ethan.tscn" id="980_ethan"]
 [ext_resource type="Script" uid="uid://goei7n31gjtu" path="res://scripts/world/door_trigger.gd" id="990_door"]
 [ext_resource type="Script" uid="uid://bfjvcdpmvu25q" path="res://scripts/world/scene_spawn.gd" id="991_spawn"]
@@ -5962,3 +5963,6 @@ target_spawn_marker = &"SpawnFromKitchen"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitToLobby" unique_id=980103]
 position = Vector2(2, 6)
 shape = SubResource("RectangleShape2D_exit_lobby")
+
+[node name="Marcus" parent="." unique_id=1204560078 instance=ExtResource("132_yms18")]
+position = Vector2(292, 190)

@@ -145,6 +145,7 @@
 [ext_resource type="Texture2D" uid="uid://dlc16cwwo56t6" path="res://assets/area/ETC/Gym_Shadow_Singles_48x48_176.png" id="133_n2e12"]
 [ext_resource type="Texture2D" uid="uid://bbn15jtlq0vbc" path="res://assets/area/ETC/Gym_Shadow_Singles_48x48_186.png" id="134_qfmb5"]
 [ext_resource type="Texture2D" uid="uid://bjtp8yadqcgrb" path="res://assets/area/ETC/Japanese_Interiors_Black_Shadow_Singles_48x48_57.png" id="139_d0cb0"]
+[ext_resource type="PackedScene" uid="uid://be6d30mx8c5ud" path="res://scenes/characters/luna.tscn" id="148_0h8ul"]
 [ext_resource type="PackedScene" uid="uid://c3sy7ebd6dhxp" path="res://scenes/characters/ethan.tscn" id="983_ethan_studio"]
 [ext_resource type="Script" uid="uid://goei7n31gjtu" path="res://scripts/world/door_trigger.gd" id="990_door_studio"]
 [ext_resource type="Script" uid="uid://bfjvcdpmvu25q" path="res://scripts/world/scene_spawn.gd" id="991_spawn_studio"]
@@ -8344,6 +8345,9 @@ tile_set = SubResource("TileSet_ocdt7")
 
 [node name="Ethan" parent="." unique_id=788815921 instance=ExtResource("983_ethan_studio")]
 position = Vector2(744, 229)
+
+[node name="Luna" parent="." unique_id=1204560078 instance=ExtResource("148_0h8ul")]
+position = Vector2(1047, 7)
 
 [node name="SpawnFromLobby" type="Marker2D" parent="." unique_id=749024530]
 position = Vector2(742, 320)

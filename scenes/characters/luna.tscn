@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://be6d30mx8c5ud"]
+
+[ext_resource type="Texture2D" uid="uid://c507pc82lns0d" path="res://assets/characters/Luna/luna.png" id="1_k0gpg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_btysa"]
+atlas = ExtResource("1_k0gpg")
+region = Rect2(0, 0, 300, 298)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_57yec"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_btysa")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kdobh"]
+size = Vector2(40, 82)
+
+[node name="Luna" type="CharacterBody2D" unique_id=1204560078]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=563051992]
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_57yec")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=839807271]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_kdobh")

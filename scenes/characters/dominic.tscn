@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cx1fsybn51ygk"]
+
+[ext_resource type="Texture2D" uid="uid://go23nxgr0b23" path="res://assets/characters/Dominic/dominic.png" id="1_kdobh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_av3di"]
+atlas = ExtResource("1_kdobh")
+region = Rect2(0, 0, 300, 298)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n5ceh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_av3di")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kdobh"]
+size = Vector2(38, 86)
+
+[node name="Dominic" type="CharacterBody2D" unique_id=1204560078]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=496499535]
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_n5ceh")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=839807271]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_kdobh")
