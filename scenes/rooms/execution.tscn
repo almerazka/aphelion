@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://4vmh2iqsvepp" path="res://scenes/characters/julian.tscn" id="5_wln1w"]
 [ext_resource type="PackedScene" uid="uid://be6d30mx8c5ud" path="res://scenes/characters/luna.tscn" id="6_6kq1p"]
 [ext_resource type="PackedScene" uid="uid://dy24ed1x5c5a5" path="res://scenes/characters/marcus.tscn" id="7_x3y1g"]
-[ext_resource type="Texture2D" uid="uid://cadf15sduv3vf" path="res://assets/ui/Win.jpeg" id="8_5obf0"]
+[ext_resource type="Texture2D" uid="uid://bpufoqilebp2d" path="res://assets/ui/Win.jpeg" id="8_5obf0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_suspect_blocker"]
 size = Vector2(39, 60.5)
@@ -89,8 +89,10 @@ retry_scene_path = "res://scenes/main_menu/lobby_1.tscn"
 retry_spawn_marker = &"SpawnFromLiving"
 restart_scene_path = "res://scenes/cutscene/intro_start.tscn"
 main_menu_scene_path = "res://scenes/main_menu/lobby_1.tscn"
+lose_scene_path = "res://scenes/main_menu/lose_screen.tscn"
+win_scene_path = "res://scenes/main_menu/win_screen.tscn"
 
-[node name="Wall" parent="." index="2" unique_id=1958470466]
+[node name="Wall" parent="." index="3" unique_id=1958470466]
 tile_map_data = PackedByteArray("AAD//wYAAgAAAAIAAAD//wAAAgAAAAEAAAD//wEAAgAAAAIAAAD//wIAAgAAAAIAAAD//wMAAgAAAAIAAAD//wQAAgAAAAIAAAD//wUAAgAAAAIAAAD//wcAAgAAAAIAAAD//wgAAgAAAAIAAAD//wkAAgAAAAIAAAD//woAAgAAAAIAAAAYAAIAAgACAAIAAAAYAAMAAgACAAIAAAAYAAQAAgACAAIAAAAYAAUAAgACAAIAAAAYAAYAAgACAAIAAAAYAAcAAgACAAIAAAAYAAgAAgACAAIAAAAYAAkAAgACAAIAAAAYAAoAAgACAAIAAAAYAAAAAgACAAEAAAAYAAEAAgACAAIAAAD//wsAAgAAAAMAAAAAAAsAAgABAAMAAAABAAsAAgABAAMAAAACAAsAAgABAAMAAAADAAsAAgABAAMAAAAEAAsAAgABAAMAAAAFAAsAAgABAAMAAAAGAAsAAgABAAMAAAAHAAsAAgABAAMAAAAIAAsAAgABAAMAAAAJAAsAAgABAAMAAAAKAAsAAgABAAMAAAALAAsAAgABAAMAAAAMAAsAAgABAAMAAAANAAsAAgABAAMAAAAYAAsAAgACAAMAAAAXAAsAAgABAAMAAAAWAAsAAgABAAMAAAAVAAsAAgABAAMAAAAUAAsAAgABAAMAAAATAAsAAgABAAMAAAASAAsAAgAAAAEAAAAOAAsAAgACAAEAAAAOAAwAAgABAAMAAAANAAwAAgABAAMAAAAPAAwAAgABAAMAAAAQAAwAAgABAAMAAAARAAwAAgABAAMAAAASAAwAAgABAAMAAAATAAwAAgABAAMAAAA=")
 
 [node name="Victoria" parent="." index="8" unique_id=1204560078 instance=ExtResource("4_ru6bl")]
@@ -107,9 +109,6 @@ position = Vector2(955, 369)
 
 [node name="Dominic" parent="." index="12" unique_id=211882577 instance=ExtResource("3_q1ccr")]
 position = Vector2(663, 367)
-
-[node name="CollisionShape2D" parent="ExitToLobby" parent_id_path=PackedInt32Array(980402) index="0" unique_id=980403]
-position = Vector2(8.5, 8.5)
 
 [node name="ExecutionCenter" type="Marker2D" parent="." index="15" unique_id=1473404096]
 position = Vector2(790, 430)
@@ -322,3 +321,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_finish_btn_normal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_finish_btn_pressed")
 theme_override_styles/hover = SubResource("StyleBoxFlat_finish_btn_hover")
 text = "Finish"
+
+[node name="CollisionShape2D" parent="ExitToLobby" parent_id_path=PackedInt32Array(980402) index="0" unique_id=980403]
+position = Vector2(8.5, 8.5)
