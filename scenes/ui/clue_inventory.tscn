@@ -2,77 +2,287 @@
 
 [ext_resource type="Script" uid="uid://dnr56ooy1cls8" path="res://scripts/ui/clue_inventory_panel.gd" id="1_hfclu"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inventory_panel"]
-bg_color = Color(0.04, 0.03, 0.02, 0.94)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.69, 0.6, 0.4, 0.92)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-shadow_color = Color(0, 0, 0, 0.65)
-shadow_size = 14
-
-[node name="ClueInventoryUI" type="CanvasLayer" unique_id=1729215553]
+[node name="ClueInventoryUI" type="CanvasLayer"]
 layer = 10
 visible = false
 script = ExtResource("1_hfclu")
 
-[node name="BookPanel" type="PanelContainer" parent="." unique_id=1478449055]
+[node name="Dimmer" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+mouse_filter = 0
+color = Color(0.02, 0.02, 0.03, 0.72)
+
+[node name="BookPanel" type="Control" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -420.0
-offset_top = -250.0
-offset_right = 420.0
-offset_bottom = 250.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_inventory_panel")
+offset_left = -500.0
+offset_top = -320.0
+offset_right = 500.0
+offset_bottom = 320.0
+mouse_filter = 0
 
-[node name="Margin" type="MarginContainer" parent="BookPanel" unique_id=1704045289]
-layout_mode = 2
-theme_override_constants/margin_left = 26
-theme_override_constants/margin_top = 18
-theme_override_constants/margin_right = 26
-theme_override_constants/margin_bottom = 18
+[node name="BookCover" type="NinePatchRect" parent="BookPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+mouse_filter = 2
+draw_center = true
 
-[node name="VBox" type="VBoxContainer" parent="BookPanel/Margin" unique_id=618989042]
-layout_mode = 2
-theme_override_constants/separation = 8
+[node name="ContentMargin" type="MarginContainer" parent="BookPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+mouse_filter = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 36
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 36
 
-[node name="Title" type="Label" parent="BookPanel/Margin/VBox" unique_id=28239573]
+[node name="PageRow" type="HBoxContainer" parent="BookPanel/ContentMargin"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.96, 0.91, 0.75, 1)
-theme_override_font_sizes/font_size = 42
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 22
+
+[node name="LeftPage" type="Control" parent="BookPanel/ContentMargin/PageRow"]
+custom_minimum_size = Vector2(453, 568)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="PageBackground" type="NinePatchRect" parent="BookPanel/ContentMargin/PageRow/LeftPage"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+mouse_filter = 2
+draw_center = true
+
+[node name="ContentMargin" type="MarginContainer" parent="BookPanel/ContentMargin/PageRow/LeftPage"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+mouse_filter = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 26
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 24
+
+[node name="LeftVBox" type="VBoxContainer" parent="BookPanel/ContentMargin/PageRow/LeftPage/ContentMargin"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="HeaderRow" type="HBoxContainer" parent="BookPanel/ContentMargin/PageRow/LeftPage/ContentMargin/LeftVBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Marker" type="TextureRect" parent="BookPanel/ContentMargin/PageRow/LeftPage/ContentMargin/LeftVBox/HeaderRow"]
+custom_minimum_size = Vector2(58, 38)
+layout_mode = 2
+mouse_filter = 2
+stretch_mode = 5
+
+[node name="HeaderText" type="VBoxContainer" parent="BookPanel/ContentMargin/PageRow/LeftPage/ContentMargin/LeftVBox/HeaderRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="NotebookTitle" type="Label" parent="BookPanel/ContentMargin/PageRow/LeftPage/ContentMargin/LeftVBox/HeaderRow/HeaderText"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
 text = "DETECTIVE NOTEBOOK"
-horizontal_alignment = 1
 
-[node name="Hint" type="Label" parent="BookPanel/Margin/VBox" unique_id=813560624]
-modulate = Color(0.78, 0.8, 0.84, 1)
+[node name="NotebookSubtitle" type="Label" parent="BookPanel/ContentMargin/PageRow/LeftPage/ContentMargin/LeftVBox/HeaderRow/HeaderText"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Press C to close"
+theme_override_font_sizes/font_size = 16
+text = "CASE NOTES AND TESTIMONIES"
 
-[node name="CaseTag" type="Label" parent="BookPanel/Margin/VBox" unique_id=757792570]
+[node name="ProgressCard" type="Control" parent="BookPanel/ContentMargin/PageRow/LeftPage/ContentMargin/LeftVBox"]
+custom_minimum_size = Vector2(0, 82)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.81, 0.74, 0.57, 1)
-theme_override_font_sizes/font_size = 20
-text = "CASE NOTES"
-horizontal_alignment = 1
+size_flags_horizontal = 3
+mouse_filter = 2
 
-[node name="Divider" type="HSeparator" parent="BookPanel/Margin/VBox" unique_id=1930884689]
-modulate = Color(0.74, 0.64, 0.44, 0.7)
+[node name="CardBackground" type="NinePatchRect" parent="BookPanel/ContentMargin/PageRow/LeftPage/ContentMargin/LeftVBox/ProgressCard"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+mouse_filter = 2
+draw_center = true
+
+[node name="CardMargin" type="MarginContainer" parent="BookPanel/ContentMargin/PageRow/LeftPage/ContentMargin/LeftVBox/ProgressCard"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+mouse_filter = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 14
+
+[node name="ProgressText" type="Label" parent="BookPanel/ContentMargin/PageRow/LeftPage/ContentMargin/LeftVBox/ProgressCard/CardMargin"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 17
+text = "Loading notes..."
+vertical_alignment = 1
 
-[node name="Content" type="RichTextLabel" parent="BookPanel/Margin/VBox" unique_id=1626270398]
+[node name="SectionLabel" type="Label" parent="BookPanel/ContentMargin/PageRow/LeftPage/ContentMargin/LeftVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "INTERVIEW FILES"
+
+[node name="SuspectScroll" type="ScrollContainer" parent="BookPanel/ContentMargin/PageRow/LeftPage/ContentMargin/LeftVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="SuspectList" type="VBoxContainer" parent="BookPanel/ContentMargin/PageRow/LeftPage/ContentMargin/LeftVBox/SuspectScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="LeftFooter" type="Label" parent="BookPanel/ContentMargin/PageRow/LeftPage/ContentMargin/LeftVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "C to close   |  W/S or Arrow Keys to browse"
+
+[node name="RightPage" type="Control" parent="BookPanel/ContentMargin/PageRow"]
+custom_minimum_size = Vector2(453, 568)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="PageBackground" type="NinePatchRect" parent="BookPanel/ContentMargin/PageRow/RightPage"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+mouse_filter = 2
+draw_center = true
+
+[node name="ContentMargin" type="MarginContainer" parent="BookPanel/ContentMargin/PageRow/RightPage"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+mouse_filter = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 26
+theme_override_constants/margin_right = 26
+theme_override_constants/margin_bottom = 24
+
+[node name="RightVBox" type="VBoxContainer" parent="BookPanel/ContentMargin/PageRow/RightPage/ContentMargin"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="SelectedHeader" type="HBoxContainer" parent="BookPanel/ContentMargin/PageRow/RightPage/ContentMargin/RightVBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="SelectedMarker" type="TextureRect" parent="BookPanel/ContentMargin/PageRow/RightPage/ContentMargin/RightVBox/SelectedHeader"]
+custom_minimum_size = Vector2(58, 38)
+layout_mode = 2
+mouse_filter = 2
+stretch_mode = 5
+
+[node name="HeaderText" type="VBoxContainer" parent="BookPanel/ContentMargin/PageRow/RightPage/ContentMargin/RightVBox/SelectedHeader"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+
+[node name="SelectedSectionTitle" type="Label" parent="BookPanel/ContentMargin/PageRow/RightPage/ContentMargin/RightVBox/SelectedHeader/HeaderText"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "NO NOTES YET"
+
+[node name="SelectedSectionSubtitle" type="Label" parent="BookPanel/ContentMargin/PageRow/RightPage/ContentMargin/RightVBox/SelectedHeader/HeaderText"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Question the guests to unlock entries."
+
+[node name="Divider" type="TextureRect" parent="BookPanel/ContentMargin/PageRow/RightPage/ContentMargin/RightVBox"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+stretch_mode = 1
+
+[node name="ClueScroll" type="ScrollContainer" parent="BookPanel/ContentMargin/PageRow/RightPage/ContentMargin/RightVBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ClueList" type="VBoxContainer" parent="BookPanel/ContentMargin/PageRow/RightPage/ContentMargin/RightVBox/ClueScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="EmptyState" type="Label" parent="BookPanel/ContentMargin/PageRow/RightPage/ContentMargin/RightVBox"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_colors/default_color = Color(0.95, 0.95, 0.92, 1)
-theme_override_constants/line_separation = 10
-theme_override_font_sizes/normal_font_size = 20
-theme_override_font_sizes/bold_font_size = 20
-bbcode_enabled = true
+theme_override_font_sizes/font_size = 18
+text = "Talk to the guests first.\nEach interview unlocks a new page of notes."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ControlsCard" type="Control" parent="BookPanel/ContentMargin/PageRow/RightPage/ContentMargin/RightVBox"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="CardBackground" type="NinePatchRect" parent="BookPanel/ContentMargin/PageRow/RightPage/ContentMargin/RightVBox/ControlsCard"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+mouse_filter = 2
+draw_center = true
+
+[node name="CardMargin" type="MarginContainer" parent="BookPanel/ContentMargin/PageRow/RightPage/ContentMargin/RightVBox/ControlsCard"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+mouse_filter = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 12
+
+[node name="ControlsText" type="Label" parent="BookPanel/ContentMargin/PageRow/RightPage/ContentMargin/RightVBox/ControlsCard/CardMargin"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "Click a file to inspect it, or browse with W/S and the arrow keys."
+vertical_alignment = 1

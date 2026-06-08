@@ -134,7 +134,7 @@ position = Vector2(725, 397)
 shape = SubResource("RectangleShape2D_suspect_blocker")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SuspectBlocker" index="4" unique_id=135801449]
-position = Vector2(663, 441.5)
+position = Vector2(663, 440.5)
 shape = SubResource("RectangleShape2D_suspect_blocker")
 
 [node name="ExecutionUI" type="CanvasLayer" parent="." index="17" unique_id=1495045601]
