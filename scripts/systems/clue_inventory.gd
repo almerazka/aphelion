@@ -3,6 +3,8 @@ extends Node
 signal clues_updated
 signal execution_state_changed(completed: bool)
 
+const SHADOW_DOMINIC_CLUE_TEXT := "Valerie's drink was the only one served personally by Dominic after the stickers had run out."
+
 const CLUES_BY_NPC := {
 	"dominic": {
 		"name": "DOMINIC HALE",
@@ -114,22 +116,46 @@ func reset_progress() -> void:
 
 func get_unlocked_sections() -> Array[Dictionary]:
 	var sections: Array[Dictionary] = []
+	var dominic_section_index := -1
 	for key in _unlock_order:
 		if not _unlocked_npc_keys.has(key):
 			continue
-		var section_data: Dictionary = CLUES_BY_NPC[key]
-		sections.append({
-			"key": key,
-			"name": section_data.get("name", key.to_upper()),
-			"clues": section_data.get("clues", [])
-		})
+		if key == "dominic":
+			dominic_section_index = sections.size()
+		sections.append(_build_section_data(key))
 
 	if _shadow_dominic_clue_unlocked:
-		sections.append({
-			"key": "shadow_dominic",
-			"name": "SHADOW CLUE - DOMINIC",
-			"clues": [
-				"Valerie's drink was the only one served personally by Dominic after the stickers had run out."
-			]
-		})
+		if dominic_section_index == -1:
+			var dominic_shadow_section := {
+				"key": "dominic",
+				"name": String(CLUES_BY_NPC["dominic"].get("name", "DOMINIC HALE")),
+				"clues": [_build_clue_entry(SHADOW_DOMINIC_CLUE_TEXT, true)]
+			}
+			sections.append(dominic_shadow_section)
+		else:
+			var dominic_section: Dictionary = sections[dominic_section_index]
+			var dominic_clues: Array = dominic_section.get("clues", [])
+			dominic_clues.insert(0, _build_clue_entry(SHADOW_DOMINIC_CLUE_TEXT, true))
+			dominic_section["clues"] = dominic_clues
+			sections[dominic_section_index] = dominic_section
 	return sections
+
+
+func _build_section_data(key: String) -> Dictionary:
+	var section_data: Dictionary = CLUES_BY_NPC[key]
+	var clue_entries: Array[Dictionary] = []
+	var raw_clues: Array = section_data.get("clues", [])
+	for clue in raw_clues:
+		clue_entries.append(_build_clue_entry(String(clue)))
+	return {
+		"key": key,
+		"name": String(section_data.get("name", key.to_upper())),
+		"clues": clue_entries
+	}
+
+
+func _build_clue_entry(text: String, is_shadow_world: bool = false) -> Dictionary:
+	return {
+		"text": text,
+		"is_shadow_world": is_shadow_world
+	}

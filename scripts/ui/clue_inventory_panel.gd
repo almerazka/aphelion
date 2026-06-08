@@ -30,6 +30,10 @@ const ENTRY_SELECTED_TINT := Color(0.56, 0.35, 0.22, 1.0)
 const ENTRY_UNSELECTED_TINT := Color(0.93, 0.84, 0.74, 0.84)
 const PORTRAIT_FRAME_SELECTED_TINT := Color(0.44, 0.28, 0.19, 1.0)
 const PORTRAIT_FRAME_UNSELECTED_TINT := Color(0.57, 0.42, 0.31, 0.8)
+const SHADOW_GLOW_COLOR := Color(0.36, 0.82, 1.0, 0.9)
+const SHADOW_FILL_COLOR := Color(0.78, 0.9, 0.98, 0.96)
+const SHADOW_TEXT_COLOR := Color(0.12, 0.19, 0.28, 1.0)
+const SHADOW_TAG_COLOR := Color(0.16, 0.47, 0.63, 1.0)
 
 var _selected_key: String = ""
 var _portrait_cache: Dictionary = {}
@@ -164,6 +168,9 @@ func _get_sections() -> Array[Dictionary]:
 
 
 func _ensure_valid_selection(sections: Array[Dictionary], prefer_latest_selection: bool) -> void:
+	if _selected_key == "shadow_dominic":
+		_selected_key = "dominic"
+
 	if sections.is_empty():
 		_selected_key = ""
 		return
@@ -359,7 +366,7 @@ func _update_selected_page(sections: Array[Dictionary]) -> void:
 	var section_name := String(section.get("name", "UNKNOWN"))
 
 	selected_section_title.text = section_name
-	selected_section_subtitle.text = _build_selected_section_subtitle(section_key, clue_entries.size())
+	selected_section_subtitle.text = _build_selected_section_subtitle(section_key, clue_entries)
 	empty_state.visible = false
 	clue_scroll.visible = true
 
@@ -370,16 +377,31 @@ func _update_selected_page(sections: Array[Dictionary]) -> void:
 	)
 
 	for clue_index in range(clue_entries.size()):
-		clue_list.add_child(_build_clue_card(clue_index + 1, String(clue_entries[clue_index])))
+		var clue_text: String = _get_clue_text(clue_entries[clue_index])
+		var is_shadow_world: bool = _is_shadow_clue(clue_entries[clue_index])
+		clue_list.add_child(
+			_build_clue_card(
+				clue_index + 1,
+				clue_text,
+				is_shadow_world
+			)
+		)
 
 
-func _build_selected_section_subtitle(section_key: String, clue_count: int) -> String:
-	if section_key == "shadow_dominic":
-		return "Hidden evidence recovered. %d lead%s recorded." % [clue_count, "" if clue_count == 1 else "s"]
+func _build_selected_section_subtitle(_section_key: String, clue_entries: Array) -> String:
+	var clue_count := clue_entries.size()
+	var shadow_clue_count := _count_shadow_clues(clue_entries)
+	if shadow_clue_count > 0:
+		return "%d statement%s logged. %d shadow lead%s highlighted." % [
+			clue_count,
+			"" if clue_count == 1 else "s",
+			shadow_clue_count,
+			"" if shadow_clue_count == 1 else "s"
+		]
 	return "%d statement%s logged for review." % [clue_count, "" if clue_count == 1 else "s"]
 
 
-func _build_clue_card(card_number: int, clue_text: String) -> Control:
+func _build_clue_card(card_number: int, clue_text: String, is_shadow_world: bool = false) -> Control:
 	var card := PanelContainer.new()
 	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	card.add_theme_stylebox_override("panel", _make_stylebox_texture(POPUP_TEXTURE, 8, 8, 8, 8))
@@ -403,22 +425,38 @@ func _build_clue_card(card_number: int, clue_text: String) -> Control:
 	var badge := TextureRect.new()
 	badge.custom_minimum_size = Vector2(15, 15)
 	badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_setup_texture_rect(badge, TICK_TEXTURE, TextureRect.STRETCH_KEEP_ASPECT_CENTERED)
+	_setup_texture_rect(
+		badge,
+		STAR_TEXTURE if is_shadow_world else TICK_TEXTURE,
+		TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	)
+	if is_shadow_world:
+		badge.modulate = SHADOW_GLOW_COLOR
 	header.add_child(badge)
 
 	var note_title := Label.new()
 	note_title.text = "NOTE %02d" % card_number
-	note_title.add_theme_color_override("font_color", ACCENT)
+	note_title.add_theme_color_override("font_color", SHADOW_TAG_COLOR if is_shadow_world else ACCENT)
 	note_title.add_theme_font_size_override("font_size", 15)
 	header.add_child(note_title)
+
+	if is_shadow_world:
+		var shadow_tag := Label.new()
+		shadow_tag.text = "SHADOW WORLD"
+		shadow_tag.add_theme_color_override("font_color", SHADOW_TAG_COLOR)
+		shadow_tag.add_theme_font_size_override("font_size", 13)
+		header.add_child(shadow_tag)
 
 	var body := Label.new()
 	body.text = clue_text
 	body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	body.add_theme_color_override("font_color", INK_DARK)
+	body.add_theme_color_override("font_color", SHADOW_TEXT_COLOR if is_shadow_world else INK_DARK)
 	body.add_theme_font_size_override("font_size", 16)
 	content.add_child(body)
+
+	if is_shadow_world:
+		card.add_theme_stylebox_override("panel", _make_shadow_clue_stylebox())
 
 	return card
 
@@ -470,6 +508,26 @@ func _set_right_header_marker(texture: Texture2D, use_portrait_scale: bool) -> v
 	right_marker.custom_minimum_size = Vector2(66, 66) if use_portrait_scale else Vector2(18, 18)
 	right_marker.modulate = Color(1, 1, 1, 1)
 	_setup_texture_rect(right_marker, texture, TextureRect.STRETCH_KEEP_ASPECT_CENTERED)
+
+
+func _get_clue_text(clue_entry) -> String:
+	if clue_entry is Dictionary:
+		return String((clue_entry as Dictionary).get("text", ""))
+	return String(clue_entry)
+
+
+func _is_shadow_clue(clue_entry) -> bool:
+	if clue_entry is Dictionary:
+		return bool((clue_entry as Dictionary).get("is_shadow_world", false))
+	return false
+
+
+func _count_shadow_clues(clue_entries: Array) -> int:
+	var shadow_count := 0
+	for clue_entry in clue_entries:
+		if _is_shadow_clue(clue_entry):
+			shadow_count += 1
+	return shadow_count
 
 
 func _get_section_portrait(section_key: String) -> Texture2D:
@@ -585,6 +643,24 @@ func _make_stylebox_texture(
 	stylebox.axis_stretch_horizontal = StyleBoxTexture.AXIS_STRETCH_MODE_TILE_FIT
 	stylebox.axis_stretch_vertical = StyleBoxTexture.AXIS_STRETCH_MODE_TILE_FIT
 	stylebox.draw_center = true
+	return stylebox
+
+
+func _make_shadow_clue_stylebox() -> StyleBoxFlat:
+	var stylebox := StyleBoxFlat.new()
+	stylebox.bg_color = SHADOW_FILL_COLOR
+	stylebox.border_width_left = 2
+	stylebox.border_width_top = 2
+	stylebox.border_width_right = 2
+	stylebox.border_width_bottom = 2
+	stylebox.border_color = SHADOW_GLOW_COLOR
+	stylebox.corner_radius_top_left = 6
+	stylebox.corner_radius_top_right = 6
+	stylebox.corner_radius_bottom_right = 6
+	stylebox.corner_radius_bottom_left = 6
+	stylebox.shadow_color = Color(SHADOW_GLOW_COLOR.r, SHADOW_GLOW_COLOR.g, SHADOW_GLOW_COLOR.b, 0.45)
+	stylebox.shadow_size = 10
+	stylebox.shadow_offset = Vector2.ZERO
 	return stylebox
 
 
