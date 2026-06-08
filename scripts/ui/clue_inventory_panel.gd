@@ -34,9 +34,20 @@ const SHADOW_GLOW_COLOR := Color(0.36, 0.82, 1.0, 0.9)
 const SHADOW_FILL_COLOR := Color(0.78, 0.9, 0.98, 0.96)
 const SHADOW_TEXT_COLOR := Color(0.12, 0.19, 0.28, 1.0)
 const SHADOW_TAG_COLOR := Color(0.16, 0.47, 0.63, 1.0)
+const OPEN_ANIMATION_DURATION := 0.28
+const CLOSE_ANIMATION_DURATION := 0.2
+const PANEL_DESIGN_SIZE := Vector2(1000.0, 640.0)
+const PANEL_MAX_OPEN_SCALE := 0.9
+const PANEL_VIEWPORT_WIDTH_RATIO := 0.88
+const PANEL_VIEWPORT_HEIGHT_RATIO := 0.9
+const PANEL_CLOSED_SCALE_FACTOR := 0.84
+const PANEL_OVERSHOOT_FACTOR := 1.035
 
 var _selected_key: String = ""
 var _portrait_cache: Dictionary = {}
+var _is_transitioning := false
+var _panel_open_scale := Vector2.ONE
+var _panel_closed_scale := Vector2.ONE
 
 @onready var dimmer: ColorRect = $Dimmer
 @onready var panel: Control = $BookPanel
@@ -68,11 +79,19 @@ func _ready() -> void:
 	dimmer.visible = false
 	panel.visible = false
 	_apply_visual_theme()
+	_update_panel_scale_targets()
+	_reset_inventory_visual_state()
+	call_deferred("_update_panel_pivot")
 	_connect_inventory_signal()
 	_refresh()
 
 
 func _input(event: InputEvent) -> void:
+	if _is_transitioning:
+		if visible or panel.visible or dimmer.visible:
+			get_viewport().set_input_as_handled()
+		return
+
 	if not panel.visible:
 		if event.is_action_pressed(toggle_action):
 			if _is_dialog_running():
@@ -86,13 +105,71 @@ func _input(event: InputEvent) -> void:
 
 
 func _toggle_inventory(prefer_latest_selection: bool = false) -> void:
-	var next_visible := not panel.visible
-	panel.visible = next_visible
-	dimmer.visible = next_visible
-	visible = next_visible
-	if next_visible:
-		_refresh(prefer_latest_selection)
-	_set_player_walk_state(not next_visible)
+	if _is_transitioning:
+		return
+
+	if panel.visible:
+		_close_inventory()
+		return
+
+	_open_inventory(prefer_latest_selection)
+
+
+func _open_inventory(prefer_latest_selection: bool) -> void:
+	_is_transitioning = true
+	_set_player_walk_state(false)
+	_refresh(prefer_latest_selection)
+	visible = true
+	dimmer.visible = true
+	panel.visible = true
+	_update_panel_scale_targets()
+	_reset_inventory_visual_state()
+	_update_panel_pivot()
+
+	var fade_tween := create_tween()
+	fade_tween.set_parallel(true)
+	fade_tween.tween_property(dimmer, "modulate:a", 1.0, OPEN_ANIMATION_DURATION)
+	fade_tween.tween_property(panel, "modulate:a", 1.0, OPEN_ANIMATION_DURATION * 0.82).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+	var scale_tween := create_tween()
+	scale_tween.tween_property(
+		panel,
+		"scale",
+		_panel_open_scale * PANEL_OVERSHOOT_FACTOR,
+		OPEN_ANIMATION_DURATION * 0.7
+	).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	scale_tween.tween_property(
+		panel,
+		"scale",
+		_panel_open_scale,
+		OPEN_ANIMATION_DURATION * 0.3
+	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	await scale_tween.finished
+
+	panel.scale = _panel_open_scale
+	panel.modulate = Color(1.0, 1.0, 1.0, 1.0)
+	dimmer.modulate = Color(1.0, 1.0, 1.0, 1.0)
+	_is_transitioning = false
+
+
+func _close_inventory() -> void:
+	_is_transitioning = true
+	_update_panel_scale_targets()
+	_update_panel_pivot()
+
+	var tween := create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(dimmer, "modulate:a", 0.0, CLOSE_ANIMATION_DURATION).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tween.tween_property(panel, "modulate:a", 0.0, CLOSE_ANIMATION_DURATION).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tween.tween_property(panel, "scale", _panel_closed_scale, CLOSE_ANIMATION_DURATION).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	await tween.finished
+
+	panel.visible = false
+	dimmer.visible = false
+	visible = false
+	_reset_inventory_visual_state()
+	_set_player_walk_state(true)
+	_is_transitioning = false
 
 
 func _handle_open_inventory_input(event: InputEvent) -> bool:
@@ -508,6 +585,27 @@ func _set_right_header_marker(texture: Texture2D, use_portrait_scale: bool) -> v
 	right_marker.custom_minimum_size = Vector2(66, 66) if use_portrait_scale else Vector2(18, 18)
 	right_marker.modulate = Color(1, 1, 1, 1)
 	_setup_texture_rect(right_marker, texture, TextureRect.STRETCH_KEEP_ASPECT_CENTERED)
+
+
+func _update_panel_pivot() -> void:
+	panel.pivot_offset = panel.size * 0.5
+
+
+func _update_panel_scale_targets() -> void:
+	var viewport_size: Vector2 = get_viewport().get_visible_rect().size
+	var width_scale: float = (viewport_size.x * PANEL_VIEWPORT_WIDTH_RATIO) / PANEL_DESIGN_SIZE.x
+	var height_scale: float = (viewport_size.y * PANEL_VIEWPORT_HEIGHT_RATIO) / PANEL_DESIGN_SIZE.y
+	var uniform_scale: float = minf(PANEL_MAX_OPEN_SCALE, minf(width_scale, height_scale))
+	if uniform_scale <= 0.0:
+		uniform_scale = PANEL_MAX_OPEN_SCALE
+	_panel_open_scale = Vector2.ONE * uniform_scale
+	_panel_closed_scale = _panel_open_scale * PANEL_CLOSED_SCALE_FACTOR
+
+
+func _reset_inventory_visual_state() -> void:
+	panel.scale = _panel_closed_scale
+	panel.modulate = Color(1.0, 1.0, 1.0, 0.0)
+	dimmer.modulate = Color(1.0, 1.0, 1.0, 0.0)
 
 
 func _get_clue_text(clue_entry) -> String:

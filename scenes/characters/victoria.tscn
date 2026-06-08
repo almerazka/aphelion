@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cl1uwio7bw5ft"]
 
 [ext_resource type="Texture2D" uid="uid://geglm00a2iel" path="res://assets/characters/Victoria/victoria.png" id="1_nesy8"]
+[ext_resource type="Script" path="res://scripts/characters/character_nameplate.gd" id="2_nameplate"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tm5ci"]
 atlas = ExtResource("1_nesy8")
@@ -28,6 +29,9 @@ collision_mask = 3
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_rirnp")
 animation = &"idle"
+
+[node name="Nameplate" type="Node2D" parent="."]
+script = ExtResource("2_nameplate")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=839807271]
 position = Vector2(-1, 2)

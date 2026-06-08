@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://be6d30mx8c5ud"]
 
 [ext_resource type="Texture2D" uid="uid://c507pc82lns0d" path="res://assets/characters/Luna/luna.png" id="1_k0gpg"]
+[ext_resource type="Script" path="res://scripts/characters/character_nameplate.gd" id="2_nameplate"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_btysa"]
 atlas = ExtResource("1_k0gpg")
@@ -29,6 +30,9 @@ collision_mask = 3
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_57yec")
 animation = &"idle"
+
+[node name="Nameplate" type="Node2D" parent="."]
+script = ExtResource("2_nameplate")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=839807271]
 position = Vector2(0, 3)

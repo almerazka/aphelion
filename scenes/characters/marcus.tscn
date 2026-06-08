@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dy24ed1x5c5a5"]
 
 [ext_resource type="Texture2D" uid="uid://b358ldhd6ymu0" path="res://assets/characters/Marcus/marcus.png" id="1_dpu2d"]
+[ext_resource type="Script" path="res://scripts/characters/character_nameplate.gd" id="2_nameplate"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dpu2d"]
 atlas = ExtResource("1_dpu2d")
@@ -28,6 +29,9 @@ collision_mask = 3
 position = Vector2(-1, 0)
 scale = Vector2(0.08, 0.08)
 sprite_frames = SubResource("SpriteFrames_u87iq")
+
+[node name="Nameplate" type="Node2D" parent="."]
+script = ExtResource("2_nameplate")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=839807271]
 position = Vector2(-1, 2)

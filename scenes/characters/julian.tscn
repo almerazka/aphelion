@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://4vmh2iqsvepp"]
 
 [ext_resource type="Texture2D" uid="uid://jyht4ldkieka" path="res://assets/characters/Julian/dr.png" id="1_hf7yd"]
+[ext_resource type="Script" path="res://scripts/characters/character_nameplate.gd" id="2_nameplate"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hf7yd"]
 atlas = ExtResource("1_hf7yd")
@@ -28,6 +29,9 @@ collision_mask = 3
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_d22mb")
 animation = &"idle"
+
+[node name="Nameplate" type="Node2D" parent="."]
+script = ExtResource("2_nameplate")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=839807271]
 position = Vector2(0, 3)

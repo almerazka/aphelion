@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cx1fsybn51ygk"]
 
 [ext_resource type="Texture2D" uid="uid://go23nxgr0b23" path="res://assets/characters/Dominic/dominic.png" id="1_kdobh"]
+[ext_resource type="Script" path="res://scripts/characters/character_nameplate.gd" id="2_nameplate"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_av3di"]
 atlas = ExtResource("1_kdobh")
@@ -29,6 +30,9 @@ visibility_layer = 2
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_n5ceh")
 animation = &"idle"
+
+[node name="Nameplate" type="Node2D" parent="."]
+script = ExtResource("2_nameplate")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=839807271]
 position = Vector2(0, 3)

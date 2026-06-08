@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed: float = 150.0
+@export var speed: float = 180.0
 @export var can_walk: bool = false
 @export var talk_action: StringName = &"talk"
 @export_file("*.tscn") var execution_scene_path: String = "res://scenes/rooms/execution.tscn"

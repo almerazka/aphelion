@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cgt6d1m022x4x" path="res://assets/characters/Ethan/ethan3.png" id="2_gkbx8"]
 [ext_resource type="Script" uid="uid://cf7ywp2x10jlx" path="res://scripts/characters/character_movement.gd" id="3_jik3d"]
 [ext_resource type="PackedScene" uid="uid://djlpw1majywxg" path="res://scenes/ui/clue_inventory.tscn" id="4_w7m11"]
+[ext_resource type="Script" path="res://scripts/characters/character_nameplate.gd" id="5_nameplate"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_omk8j"]
 atlas = ExtResource("1_hglu8")
@@ -93,6 +94,9 @@ scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_omk8j")
 animation = &"walk_up"
 frame_progress = 0.22161947
+
+[node name="Nameplate" type="Node2D" parent="."]
+script = ExtResource("5_nameplate")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=500358420]
 position = Vector2(0.5, 34)

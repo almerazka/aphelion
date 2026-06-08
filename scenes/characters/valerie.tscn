@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bf6moavmgiicj"]
 
 [ext_resource type="Texture2D" uid="uid://cwfkw6ute5qh4" path="res://assets/characters/Valerie/corps3.png" id="1_bj74q"]
+[ext_resource type="Script" path="res://scripts/characters/character_nameplate.gd" id="2_nameplate"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_34m4v"]
 atlas = ExtResource("1_bj74q")
@@ -26,6 +27,9 @@ scale = Vector2(0.4, 0.4)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1770356322]
 sprite_frames = SubResource("SpriteFrames_3v77u")
 animation = &"idle"
+
+[node name="Nameplate" type="Node2D" parent="."]
+script = ExtResource("2_nameplate")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2042699037]
 position = Vector2(6.6666727, 36.666668)
