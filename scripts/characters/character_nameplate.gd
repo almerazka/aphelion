@@ -3,6 +3,8 @@ extends Node2D
 @export var display_name: String = ""
 @export var y_offset: float = 0.0
 
+const NAMEPLATE_MEASURE_FONT := preload("res://assets/ui/SpecialElite-Regular.ttf")
+
 const DEFAULT_DISPLAY_NAMES: Dictionary = {
 	"ethan": "Ethan",
 	"dominic": "Dominic",
@@ -28,8 +30,8 @@ const OUTLINE_COLOR := Color(0.06, 0.04, 0.03, 1.0)
 const PLATE_BG_COLOR := Color(0.08, 0.06, 0.05, 0.8)
 const PLATE_BORDER_COLOR := Color(0.95, 0.86, 0.68, 0.42)
 const FONT_SIZE := 13
-const MIN_PLATE_WIDTH := 92.0
 const PLATE_HEIGHT := 20.0
+const PLATE_HORIZONTAL_PADDING := 16.0
 
 var _anchor_parent: Node2D
 var _plate: PanelContainer
@@ -65,16 +67,25 @@ func _ensure_plate() -> void:
 		margin.name = "Margin"
 		_plate.add_child(margin)
 
-	var existing_label := margin.get_node_or_null("Label")
+	var center := margin.get_node_or_null("Center") as CenterContainer
+	if center == null:
+		center = CenterContainer.new()
+		center.name = "Center"
+		margin.add_child(center)
+
+	var existing_label := center.get_node_or_null("Label")
 	if existing_label is Label:
 		_label = existing_label as Label
 	else:
 		_label = Label.new()
 		_label.name = "Label"
-		margin.add_child(_label)
+		center.add_child(_label)
 
 	_plate.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	center.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	center.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	center.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	margin.add_theme_constant_override("margin_left", 8)
 	margin.add_theme_constant_override("margin_top", 1)
 	margin.add_theme_constant_override("margin_right", 8)
@@ -84,12 +95,19 @@ func _ensure_plate() -> void:
 	_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_label.autowrap_mode = TextServer.AUTOWRAP_OFF
 	_label.clip_text = false
-	_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_label.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	_label.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 
 
 func _refresh_plate() -> void:
 	var resolved_name := _get_resolved_display_name()
-	var plate_width: float = maxf(MIN_PLATE_WIDTH, float(resolved_name.length() * 9 + 26))
+	var text_size: Vector2 = NAMEPLATE_MEASURE_FONT.get_string_size(
+		resolved_name,
+		HORIZONTAL_ALIGNMENT_CENTER,
+		-1,
+		FONT_SIZE
+	)
+	var plate_width: float = float(ceili(text_size.x)) + PLATE_HORIZONTAL_PADDING
 	var settings := LabelSettings.new()
 	settings.font_size = FONT_SIZE
 	settings.font_color = TEXT_COLOR

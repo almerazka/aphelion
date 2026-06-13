@@ -15,6 +15,8 @@ var _execution_transition_queued: bool = false
 const DIALOG_NAME_COLOR := Color(1, 1, 1, 1)
 const DIALOG_PANEL_BG := Color(0.02, 0.02, 0.03, 0.92)
 const DIALOG_PANEL_BORDER := Color(0.71, 0.63, 0.45, 0.78)
+const DIALOG_PANEL_PADDING_X := 22
+const DIALOG_PANEL_PADDING_Y := 18
 
 const INTERACTABLE_DIALOG_KEYS: Dictionary = {
 	"dominic": "dominic",
@@ -112,6 +114,8 @@ func _try_talk_to_nearest_npc() -> void:
 	Dialogic.start(timeline)
 	_apply_dialog_name_style()
 	_apply_dialog_panel_style()
+	call_deferred("_apply_dialog_name_style")
+	call_deferred("_apply_dialog_panel_style")
 
 
 func _on_dialogue_ended() -> void:
@@ -224,10 +228,10 @@ func _build_dialog_stylebox() -> StyleBoxFlat:
 	style.corner_radius_bottom_left = 10
 	style.shadow_color = Color(0, 0, 0, 0.5)
 	style.shadow_size = 7
-	style.content_margin_left = 14
-	style.content_margin_top = 11
-	style.content_margin_right = 14
-	style.content_margin_bottom = 11
+	style.content_margin_left = DIALOG_PANEL_PADDING_X
+	style.content_margin_top = DIALOG_PANEL_PADDING_Y
+	style.content_margin_right = DIALOG_PANEL_PADDING_X
+	style.content_margin_bottom = DIALOG_PANEL_PADDING_Y
 	return style
 
 

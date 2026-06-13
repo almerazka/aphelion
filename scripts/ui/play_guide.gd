@@ -9,7 +9,7 @@ extends CanvasLayer
 @onready var label: RichTextLabel = $CenterGuidePanel/Margin/GuideText
 @onready var timer: Timer = $DisplayTimer
 @onready var play_time_panel: PanelContainer = $PlayTimePanel
-@onready var play_time_label: Label = $PlayTimePanel/Margin/PlayTimeLabel
+@onready var play_time_label: Label = $PlayTimePanel/Margin/Center/PlayTimeLabel
 
 var _showing_execution_prompt: bool = false
 var _shadow_hint_shown_once: bool = false
@@ -117,7 +117,7 @@ func _maybe_show_intro_guide_once() -> void:
 	var intro_text := "[center][color=#9efcff][b]PLAY GUIDE[/b][/color][/center]\n"
 	intro_text += "[center][color=#e8f7ff]Press `Space` to talk to NPCs[/color][/center]\n"
 	intro_text += "[center][color=#e8f7ff]Press `C` to open the Detective Notebook[/color][/center]\n"
-	intro_text += "\n[center][color=#8bd8ff]Gather information first. Once all NPCs have been questioned,[/color][/center]"
+	intro_text += "\n[center][color=#8bd8ff]Gather information first. Once all NPCs have been questioned[/color][/center]"
 	var duration := intro_duration_seconds
 	var current_scene := get_tree().current_scene
 	if current_scene != null and current_scene.scene_file_path == "res://scenes/main_menu/lobby_1.tscn" and not _lobby_intro_shown_once:

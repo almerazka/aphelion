@@ -9,6 +9,11 @@ extends Node2D
 @onready var fade_rect: ColorRect = $IntroOverlay/FadeRect
 @onready var cutscene_camera: Camera2D = $CutsceneCamera
 
+const DIALOG_PANEL_BG := Color(0.02, 0.02, 0.03, 0.92)
+const DIALOG_PANEL_BORDER := Color(0.71, 0.63, 0.45, 0.78)
+const DIALOG_PANEL_PADDING_X := 22
+const DIALOG_PANEL_PADDING_Y := 18
+
 const INTRO_TIMELINE_PARTY_TEXT := """
 The tension at the party room was so much alive.
 
@@ -69,6 +74,8 @@ func _play_dialogic_timeline(timeline_text: String) -> void:
 	auto_advance.per_character_delay = 0.02
 
 	Dialogic.start(timeline)
+	await get_tree().process_frame
+	_apply_dialogic_cutscene_style()
 	await Dialogic.timeline_ended
 
 	auto_advance.enabled_forced = old_enabled_forced
@@ -84,11 +91,49 @@ func _on_speaker_updated(_character: DialogicCharacter) -> void:
 
 
 func _apply_dialogic_cutscene_style() -> void:
+	for dialog_text in get_tree().get_nodes_in_group("dialogic_dialog_text"):
+		if not (dialog_text is Control):
+			continue
+		var dialog_panel := _find_parent_panel(dialog_text as Control)
+		if dialog_panel != null:
+			dialog_panel.self_modulate = Color(1, 1, 1, 1)
+			dialog_panel.add_theme_stylebox_override("panel", _build_dialog_stylebox())
+
 	for name_label in get_tree().get_nodes_in_group("dialogic_name_label"):
 		if "use_character_color" in name_label:
 			name_label.use_character_color = false
 		if name_label is CanvasItem:
 			(name_label as CanvasItem).self_modulate = Color(1, 1, 1, 1)
+
+
+func _find_parent_panel(node: Node) -> PanelContainer:
+	var current := node.get_parent()
+	while current != null:
+		if current is PanelContainer:
+			return current as PanelContainer
+		current = current.get_parent()
+	return null
+
+
+func _build_dialog_stylebox() -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = DIALOG_PANEL_BG
+	style.border_color = DIALOG_PANEL_BORDER
+	style.border_width_left = 2
+	style.border_width_top = 2
+	style.border_width_right = 2
+	style.border_width_bottom = 2
+	style.corner_radius_top_left = 10
+	style.corner_radius_top_right = 10
+	style.corner_radius_bottom_right = 10
+	style.corner_radius_bottom_left = 10
+	style.shadow_color = Color(0, 0, 0, 0.5)
+	style.shadow_size = 7
+	style.content_margin_left = DIALOG_PANEL_PADDING_X
+	style.content_margin_top = DIALOG_PANEL_PADDING_Y
+	style.content_margin_right = DIALOG_PANEL_PADDING_X
+	style.content_margin_bottom = DIALOG_PANEL_PADDING_Y
+	return style
 
 
 func _setup_camera() -> void:

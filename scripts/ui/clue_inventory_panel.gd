@@ -176,7 +176,7 @@ func _handle_open_inventory_input(event: InputEvent) -> bool:
 	if event.is_action_pressed(toggle_action):
 		_toggle_inventory()
 		return true
-
+ 
 	if not (event is InputEventKey):
 		return false
 
@@ -564,20 +564,27 @@ func _apply_visual_theme() -> void:
 	progress_text.add_theme_font_size_override("font_size", 16)
 	progress_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	left_footer.text = "C close   |   W/S or Arrow Keys"
+	left_footer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	left_footer.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	left_footer.add_theme_color_override("font_color", INK_MUTED)
-	left_footer.add_theme_font_size_override("font_size", 11)
+	left_footer.add_theme_font_size_override("font_size", 13)
 	left_footer.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	selected_section_title.add_theme_color_override("font_color", INK_DARK)
 	selected_section_title.add_theme_font_size_override("font_size", 22)
 	selected_section_title.autowrap_mode = TextServer.AUTOWRAP_OFF
+	selected_section_subtitle.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	selected_section_subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	selected_section_subtitle.add_theme_color_override("font_color", ACCENT)
-	selected_section_subtitle.add_theme_font_size_override("font_size", 13)
+	selected_section_subtitle.add_theme_font_size_override("font_size", 15)
 	selected_section_subtitle.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	empty_state.add_theme_color_override("font_color", INK_SOFT)
 	empty_state.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	controls_text.text = "Open a file, or browse with W/S or Arrow Keys."
+	controls_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	controls_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	controls_text.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	controls_text.add_theme_color_override("font_color", INK_DARK)
-	controls_text.add_theme_font_size_override("font_size", 13)
+	controls_text.add_theme_font_size_override("font_size", 15)
 	controls_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 
 
